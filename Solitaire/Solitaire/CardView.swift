@@ -144,7 +144,7 @@ final class CardView: UIView {
         let (_, rank) = getCardSuitAndRank()
         self.rankLabel.text = getDisplayValueForRank(rank: rank)
         self.rankLabel.textColor = color
-        self.rankLabel.font = UIFont(name: "Palatino-Bold", size: scaled(value: 22.0))
+        self.rankLabel.font = UIFont(name: "Palatino-Bold", size: scaled(value: 20.0))
         self.backgroundImageView.image = CardView.faceDownImage
         
         self.addSubview(self.mainImageView)

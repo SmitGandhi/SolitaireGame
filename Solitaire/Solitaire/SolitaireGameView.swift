@@ -66,7 +66,88 @@ final class SolitaireGameView: UIView {
         self.dealCards()
     }
     
+//    private func initStackViews() {
+//        let baseRect = CGRect(x: 4.0, y: scaled(value: 110.0), width: CARD_WIDTH, height: CARD_HEIGHT)
+//        var foundationRect = baseRect
+//        for index in 0 ..< 4 {
+//            let stackView = FoundationCardStackView(frame: foundationRect, cards: Model.sharedInstance.foundationStacks[index])
+//            self.addSubview(stackView)
+//            self.foundationStacks.append(stackView)
+//            foundationRect = foundationRect.offsetBy(dx: CGFloat(CARD_WIDTH + SPACING), dy: 0.0)
+//        }
+//        
+//        foundationRect = foundationRect.offsetBy(dx: CGFloat(CARD_WIDTH + SPACING), dy: 0.0)
+//        self.talonStackView = TalonCardStackView(frame: foundationRect, cards: Model.sharedInstance.talonStack)
+//        self.addSubview(self.talonStackView)
+//        
+//        foundationRect = foundationRect.offsetBy(dx: CGFloat(CARD_WIDTH + SPACING), dy: 0.0)
+//        self.stockStackView = StockCardStackView(frame: foundationRect, cards: Model.sharedInstance.stockStack)
+//        self.stockStackView.delegate = self
+//        self.addSubview(self.stockStackView)
+//        
+//        var gameStackRect = baseRect.offsetBy(dx: 0.0, dy: CGFloat(CARD_HEIGHT + scaled(value: 12.0)))
+//        self.baseTableauFrameRect = gameStackRect
+//        for index in 0 ..< 7 {
+//            let stackView = TableauStackView(frame: gameStackRect, cards: Model.sharedInstance.tableauStacks[index])
+//            self.addSubview(stackView)
+//            self.tableauStackViews.append(stackView)
+//            gameStackRect = gameStackRect.offsetBy(dx: CGFloat(CARD_WIDTH + SPACING), dy: 0.0)
+//        }
+//        
+//        let screenWidth = UIScreen.main.bounds.width
+//        
+//        let buttonFrame = CGRect(x: 1.0, y: scaled(value: 60.0), width: scaled(value: 70.0), height: scaled(value: 30.0))
+//        let newDealButton = UIButton(frame: buttonFrame)
+//        newDealButton.setTitle("New Deal", for: .normal)
+//        newDealButton.setTitleColor(.white, for: .normal)
+//        newDealButton.titleLabel?.font = .systemFont(ofSize: scaled(value: 14.0))
+//        newDealButton.addTarget(self, action: .newDealTap, for: .touchUpInside)
+//        self.addSubview(newDealButton)
+//        
+//        let hintButtonFrame = CGRect(x: ((screenWidth/2)-35.0), y: scaled(value: 60.0), width: scaled(value: 70.0), height: scaled(value: 30.0))
+//        let hintButton = UIButton(frame: hintButtonFrame)
+//        hintButton.setTitle("Hint", for: .normal)
+//        hintButton.setTitleColor(.white, for: .normal)
+//        hintButton.titleLabel?.font = .systemFont(ofSize: scaled(value: 14.0))
+//        hintButton.addTarget(self, action: .hintTap, for: .touchUpInside)
+//        self.addSubview(hintButton)
+//        
+//        let undoButtonFrame = CGRect(x: (screenWidth-70.0), y: scaled(value: 60.0), width: scaled(value: 70.0), height: scaled(value: 30.0))
+//        let undoButton = UIButton(frame: undoButtonFrame)
+//        undoButton.setTitle("Undo", for: .normal)
+//        undoButton.setTitleColor(.white, for: .normal)
+//        undoButton.titleLabel?.font = .systemFont(ofSize: scaled(value: 14.0))
+//        undoButton.addTarget(self, action: .undoTap, for: .touchUpInside)
+//        self.addSubview(undoButton)
+//        
+//        let yOffset = scaled(value: 95.0)
+//
+//        timerLabel = UILabel(frame: CGRect(x: 10, y: yOffset, width: 80, height: 20))
+//        movesLabel = UILabel(frame: CGRect(x: (UIScreen.main.bounds.width/2 - 40), y: yOffset, width: 100, height: 20))
+//        scoreLabel = UILabel(frame: CGRect(x: UIScreen.main.bounds.width - 90, y: yOffset, width: 80, height: 20))
+//
+//        for label in [timerLabel, movesLabel, scoreLabel] {
+//            label?.font = .systemFont(ofSize: 14.0)
+//            label?.textColor = .white
+//            label?.textAlignment = .center
+//            self.addSubview(label!)
+//        }
+//
+//        updateStatsLabels()
+//        
+//    }
+    
     private func initStackViews() {
+        let screenWidth = UIScreen.main.bounds.width
+        let screenHeight = UIScreen.main.bounds.height
+
+        let isLargeScreen = screenWidth > 600
+        let buttonFontSize: CGFloat = isLargeScreen ? 30.0 : 14.0
+        let labelFontSize: CGFloat = isLargeScreen ? 22.0 : 14.0
+        let buttonWidth: CGFloat = isLargeScreen ? 150 : 70
+        let buttonHeight: CGFloat = isLargeScreen ? 44 : 30
+        let buttonY: CGFloat = isLargeScreen ? scaled(value: 40.0) : scaled(value: 60.0)
+
         let baseRect = CGRect(x: 4.0, y: scaled(value: 110.0), width: CARD_WIDTH, height: CARD_HEIGHT)
         var foundationRect = baseRect
         for index in 0 ..< 4 {
@@ -75,16 +156,16 @@ final class SolitaireGameView: UIView {
             self.foundationStacks.append(stackView)
             foundationRect = foundationRect.offsetBy(dx: CGFloat(CARD_WIDTH + SPACING), dy: 0.0)
         }
-        
+
         foundationRect = foundationRect.offsetBy(dx: CGFloat(CARD_WIDTH + SPACING), dy: 0.0)
         self.talonStackView = TalonCardStackView(frame: foundationRect, cards: Model.sharedInstance.talonStack)
         self.addSubview(self.talonStackView)
-        
+
         foundationRect = foundationRect.offsetBy(dx: CGFloat(CARD_WIDTH + SPACING), dy: 0.0)
         self.stockStackView = StockCardStackView(frame: foundationRect, cards: Model.sharedInstance.stockStack)
         self.stockStackView.delegate = self
         self.addSubview(self.stockStackView)
-        
+
         var gameStackRect = baseRect.offsetBy(dx: 0.0, dy: CGFloat(CARD_HEIGHT + scaled(value: 12.0)))
         self.baseTableauFrameRect = gameStackRect
         for index in 0 ..< 7 {
@@ -93,48 +174,51 @@ final class SolitaireGameView: UIView {
             self.tableauStackViews.append(stackView)
             gameStackRect = gameStackRect.offsetBy(dx: CGFloat(CARD_WIDTH + SPACING), dy: 0.0)
         }
-        
-        let screenWidth = UIScreen.main.bounds.width
-        
-        let buttonFrame = CGRect(x: 1.0, y: scaled(value: 60.0), width: scaled(value: 70.0), height: scaled(value: 30.0))
-        let newDealButton = UIButton(frame: buttonFrame)
+
+        // Buttons
+        let newDealButton = UIButton(frame: CGRect(x: 10.0, y: buttonY, width: buttonWidth, height: buttonHeight))
         newDealButton.setTitle("New Deal", for: .normal)
         newDealButton.setTitleColor(.white, for: .normal)
-        newDealButton.titleLabel?.font = .systemFont(ofSize: scaled(value: 14.0))
+        newDealButton.contentHorizontalAlignment = .left
+        newDealButton.titleLabel?.font = .systemFont(ofSize: buttonFontSize)
         newDealButton.addTarget(self, action: .newDealTap, for: .touchUpInside)
         self.addSubview(newDealButton)
-        
-        let hintButtonFrame = CGRect(x: ((screenWidth/2)-35.0), y: scaled(value: 60.0), width: scaled(value: 70.0), height: scaled(value: 30.0))
-        let hintButton = UIButton(frame: hintButtonFrame)
+
+        let hintButton = UIButton(frame: CGRect(x: (screenWidth / 2 - buttonWidth / 2), y: buttonY, width: buttonWidth, height: buttonHeight))
         hintButton.setTitle("Hint", for: .normal)
         hintButton.setTitleColor(.white, for: .normal)
-        hintButton.titleLabel?.font = .systemFont(ofSize: scaled(value: 14.0))
+        hintButton.titleLabel?.font = .systemFont(ofSize: buttonFontSize)
         hintButton.addTarget(self, action: .hintTap, for: .touchUpInside)
         self.addSubview(hintButton)
-        
-        let undoButtonFrame = CGRect(x: (screenWidth-70.0), y: scaled(value: 60.0), width: scaled(value: 70.0), height: scaled(value: 30.0))
-        let undoButton = UIButton(frame: undoButtonFrame)
+
+        let undoButton = UIButton(frame: CGRect(x: (screenWidth - buttonWidth - 10), y: buttonY, width: buttonWidth, height: buttonHeight))
         undoButton.setTitle("Undo", for: .normal)
         undoButton.setTitleColor(.white, for: .normal)
-        undoButton.titleLabel?.font = .systemFont(ofSize: scaled(value: 14.0))
+        undoButton.contentHorizontalAlignment = .right
+        undoButton.titleLabel?.font = .systemFont(ofSize: buttonFontSize)
         undoButton.addTarget(self, action: .undoTap, for: .touchUpInside)
         self.addSubview(undoButton)
-        
-        let yOffset = scaled(value: 95.0)
 
-        timerLabel = UILabel(frame: CGRect(x: 10, y: yOffset, width: 80, height: 20))
-        movesLabel = UILabel(frame: CGRect(x: (UIScreen.main.bounds.width/2 - 40), y: yOffset, width: 100, height: 20))
-        scoreLabel = UILabel(frame: CGRect(x: UIScreen.main.bounds.width - 90, y: yOffset, width: 80, height: 20))
+//        newDealButton.backgroundColor  = .black
+//        hintButton.backgroundColor  = .black
+//        undoButton.backgroundColor  = .black
+        
+        // Labels
+        let yOffset = buttonY + buttonHeight + 5
+
+        timerLabel = UILabel(frame: CGRect(x: 10, y: yOffset, width: 100, height: 24))
+        movesLabel = UILabel(frame: CGRect(x: (screenWidth / 2 - 60), y: yOffset, width: 120, height: 24))
+        scoreLabel = UILabel(frame: CGRect(x: screenWidth - 110, y: yOffset, width: 100, height: 24))
 
         for label in [timerLabel, movesLabel, scoreLabel] {
-            label?.font = .systemFont(ofSize: 14.0)
+            label?.font = .systemFont(ofSize: labelFontSize)
             label?.textColor = .white
             label?.textAlignment = .center
             self.addSubview(label!)
         }
-
+        timerLabel.textAlignment = .left
+        scoreLabel.textAlignment = .right
         updateStatsLabels()
-        
     }
     
     required init?(coder aDecoder: NSCoder) {

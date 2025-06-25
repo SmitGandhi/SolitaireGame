@@ -68,14 +68,14 @@ class CardStackView: UIView, CardStackDelegate {
 
 
 class LayeredStackView: CardStackView {
-    let cardLayerOffset: CGFloat = 0.24
+    let cardLayerOffset: CGFloat = 0.30
     
     override fileprivate func addCard(card: Card) {
         var cardFrame = self.bounds
         if self.subviews.count > 0 {
             let previousCard = self.subviews.last! as! CardView
             let previousCardFrame = previousCard.frame
-            let offset = previousCard.isFaceUp ? (CARD_HEIGHT * cardLayerOffset) : (CARD_HEIGHT * 0.07)
+            let offset = previousCard.isFaceUp ? (CARD_HEIGHT * cardLayerOffset) : (CARD_HEIGHT * 0.10)
             cardFrame = previousCardFrame.offsetBy(dx: 0.0, dy: offset)
             self.frame.size.height += offset
         }

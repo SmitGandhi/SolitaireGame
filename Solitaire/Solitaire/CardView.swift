@@ -31,7 +31,7 @@ enum Suit: Int {
 
 // UIView that displays a card
 final class CardView: UIView {
-    static let faceDownImage = UIImage(named: "PlayingCard-back.png")
+    static let faceDownImage = UIImage(named: "PlayingCard-back_3.png")
     
     // the card value is its position in the 0..51 array of possible card values. see
     // getCardSuitAndRank to see how suit and rank are determined from the value

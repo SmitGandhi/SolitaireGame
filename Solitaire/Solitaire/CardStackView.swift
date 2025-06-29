@@ -247,16 +247,32 @@ final class StockCardStackView: PiledStackView {
         delegate?.stockDidTap()  // ✅ Notify parent
 
         if self.cards.topCard() != nil {
-            Game.sharedInstance.moveTopCard(from: Model.sharedInstance.stockStack, to: Model.sharedInstance.talonStack, faceUp: true, makeNewTopCardFaceup: false)
+            Game.sharedInstance.moveTopCard(
+                from: Model.sharedInstance.stockStack,
+                to: Model.sharedInstance.talonStack,
+                type: .stockToTalon,
+                faceUp: true,
+                makeNewTopCardFaceup: false
+            )
             return true
         } else {
-            // Optional: track recycle if needed
+            // Recycle Talon → Stock
             Game.sharedInstance.copyCards(from: Model.sharedInstance.talonStack, to: Model.sharedInstance.stockStack)
             Model.sharedInstance.talonStack.removeAllCards()
+            
+//            // ✅ Flip one card without recording undo
+//            Game.sharedInstance.moveTopCard(
+//                from: Model.sharedInstance.stockStack,
+//                to: Model.sharedInstance.talonStack,
+//                type: nil, // ❌ don't record to undo
+//                faceUp: true,
+//                makeNewTopCardFaceup: false
+//            )
         }
         
         return false
     }
+
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")

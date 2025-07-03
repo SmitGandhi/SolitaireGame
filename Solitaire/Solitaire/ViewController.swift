@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, SolitaireGameViewDelegate {
+class SolitaireGameViewController: UIViewController, SolitaireGameViewDelegate {
     private var gameView: SolitaireGameView?
 
     override var preferredStatusBarStyle: UIStatusBarStyle {

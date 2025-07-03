@@ -30,7 +30,7 @@ final class SolitaireGameView: UIView {
         case cardslide      = "CardSlide"
     }
     weak var delegate: SolitaireGameViewDelegate?
-    private var testModeEnabled = false
+    private var testModeEnabled = true
     private var isAutoPlaying = false
 
     private var foundationStacks = [FoundationCardStackView]()
@@ -77,8 +77,9 @@ final class SolitaireGameView: UIView {
         let buttonWidth: CGFloat = isLargeScreen ? 150 : 70
         let buttonHeight: CGFloat = isLargeScreen ? 44 : 30
         let buttonY: CGFloat = isLargeScreen ? scaled(value: 40.0) : scaled(value: 60.0)
+        let StackViewTopConstrain: CGFloat = isLargeScreen ? scaled(value: 80.0) : scaled(value: 120.0)
 
-        let baseRect = CGRect(x: 4.0, y: scaled(value: 110.0), width: CARD_WIDTH, height: CARD_HEIGHT)
+        let baseRect = CGRect(x: 4.0, y: StackViewTopConstrain, width: CARD_WIDTH, height: CARD_HEIGHT)
         var foundationRect = baseRect
         for index in 0 ..< 4 {
             let stackView = FoundationCardStackView(frame: foundationRect, cards: Model.sharedInstance.foundationStacks[index])
@@ -114,12 +115,12 @@ final class SolitaireGameView: UIView {
         newDealButton.addTarget(self, action: .newDealTap, for: .touchUpInside)
         self.addSubview(newDealButton)
 
-//        let hintButton = UIButton(frame: CGRect(x: (screenWidth / 2 - buttonWidth / 2), y: buttonY, width: buttonWidth, height: buttonHeight))
-//        hintButton.setTitle("Hint", for: .normal)
-//        hintButton.setTitleColor(.white, for: .normal)
-//        hintButton.titleLabel?.font = .systemFont(ofSize: buttonFontSize)
-//        hintButton.addTarget(self, action: .hintTap, for: .touchUpInside)
-//        self.addSubview(hintButton)
+        let hintButton = UIButton(frame: CGRect(x: (screenWidth / 2 - buttonWidth / 2), y: buttonY, width: buttonWidth, height: buttonHeight))
+        hintButton.setTitle("Hint", for: .normal)
+        hintButton.setTitleColor(.white, for: .normal)
+        hintButton.titleLabel?.font = .systemFont(ofSize: buttonFontSize)
+        hintButton.addTarget(self, action: .hintTap, for: .touchUpInside)
+        self.addSubview(hintButton)
 
         let undoButton = UIButton(frame: CGRect(x: (screenWidth - buttonWidth - 10), y: buttonY, width: buttonWidth, height: buttonHeight))
         undoButton.setTitle("Undo", for: .normal)
@@ -129,13 +130,12 @@ final class SolitaireGameView: UIView {
         undoButton.addTarget(self, action: .undoTap, for: .touchUpInside)
         self.addSubview(undoButton)
 
-        let solveButton = UIButton(frame: CGRect(x: (screenWidth / 2 - buttonWidth / 2), y: buttonY, width: buttonWidth, height: buttonHeight))
-        solveButton.setTitle("Solve", for: .normal)
-        solveButton.setTitleColor(.white, for: .normal)
-        solveButton.contentHorizontalAlignment = .right
-        solveButton.titleLabel?.font = .systemFont(ofSize: buttonFontSize)
-        solveButton.addTarget(self, action: .undoTap, for: .touchUpInside)
-        self.addSubview(solveButton)
+//        let solveButton = UIButton(frame: CGRect(x: (screenWidth / 2 - buttonWidth / 2), y: buttonY, width: buttonWidth, height: buttonHeight))
+//        solveButton.setTitle("Solve", for: .normal)
+//        solveButton.setTitleColor(.white, for: .normal)
+//        solveButton.titleLabel?.font = .systemFont(ofSize: buttonFontSize)
+//        solveButton.addTarget(self, action: .solveTap, for: .touchUpInside)
+//        self.addSubview(solveButton)
 
         
 //        newDealButton.backgroundColor  = .black
@@ -146,7 +146,7 @@ final class SolitaireGameView: UIView {
         let yOffset = buttonY + buttonHeight + 5
 
         timerLabel = UILabel(frame: CGRect(x: 10, y: yOffset, width: 100, height: 24))
-        movesLabel = UILabel(frame: CGRect(x: (screenWidth / 2 - 60), y: yOffset, width: 120, height: 24))
+        movesLabel = UILabel(frame: CGRect(x: (screenWidth / 2 - 50), y: yOffset, width: 100, height: 24))
         scoreLabel = UILabel(frame: CGRect(x: screenWidth - 130, y: yOffset, width: 120, height: 24))
 
         for label in [timerLabel, movesLabel, scoreLabel] {
@@ -158,6 +158,10 @@ final class SolitaireGameView: UIView {
         timerLabel.textAlignment = .left
         scoreLabel.textAlignment = .right
         updateStatsLabels()
+        
+//        timerLabel.backgroundColor = .blue
+//        movesLabel.backgroundColor = .blue
+//        scoreLabel.backgroundColor = .blue
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -274,7 +278,7 @@ final class SolitaireGameView: UIView {
                 for toTableau in tableauStackViews where toTableau != fromTableau {
                     if toTableau.cards.canAccept(droppedCard: card) {
                         // Highlight drop target
-                        highlightStackTarget(toTableau)
+//                        highlightStackTarget(toTableau)
                         
                         // Highlight card sequence
                         let movableViews = faceUpCardViews[i...]
@@ -306,12 +310,12 @@ final class SolitaireGameView: UIView {
     }
     
     private func highlightHint(cardView: CardView, delay: Double = 0) {
-        UIView.animate(withDuration: 0.25, delay: delay, options: [], animations: {
+        UIView.animate(withDuration: 0.5, delay: delay, options: [], animations: {
             cardView.transform = CGAffineTransform(scaleX: 1.15, y: 1.15)
             cardView.layer.borderWidth = 2
             cardView.layer.borderColor = UIColor.yellow.cgColor
         }) { _ in
-            UIView.animate(withDuration: 0.25, delay: 0.5, options: [], animations: {
+            UIView.animate(withDuration: 0.5, delay: 0.5, options: [], animations: {
                 cardView.transform = .identity
                 cardView.layer.borderWidth = 1
                 cardView.layer.borderColor = UIColor.gray.cgColor
@@ -380,6 +384,9 @@ final class SolitaireGameView: UIView {
         updateStatsLabels()
         Game.sharedInstance.resetHistory()
         
+        //Solve Deck
+        Model.sharedInstance.deck = Game.sharedInstance.generateSolvableDeck()
+
         var tableauFrame = self.baseTableauFrameRect
         var cardValuesIndex = 0
         for outerIndex in 0 ..< 7 {
@@ -747,9 +754,9 @@ extension SolitaireGameView {
         
         guard !isAutoPlaying else { return }
         isAutoPlaying = true
-        
+        self.isUserInteractionEnabled = !isAutoPlaying
         // Try moving each to foundation with delay
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
+        DispatchQueue.main.async {
             self.autoPlayMoveNext()
         }
     }
@@ -757,6 +764,7 @@ extension SolitaireGameView {
     //    private func autoPlayMoveNext(_ moves: [(from: CardDataStack, fromView: CardStackView, card: Card)]) {
     private func autoPlayMoveNext() {
         self.isAutoPlaying = false  // ✅ Reset autoplay flag
+        self.isUserInteractionEnabled = !isAutoPlaying
         
         // Build current top card candidates dynamically each step
         var candidates: [(stack: CardDataStack, view: CardStackView, card: Card)] = []
@@ -787,15 +795,19 @@ extension SolitaireGameView {
                             self.addSubview(snapshot)
                             self.playToastSound(.cardslide)
                             
-                            UIView.animate(withDuration: 0.4, animations: {
+                            UIView.animate(withDuration: 0.25, animations: {
                                 snapshot.center = foundationView.center
                                 snapshot.alpha = 0.1
                             }, completion: { _ in
                                 snapshot.removeFromSuperview()
                                 
                                 // Move in model
-                                candidate.stack.popCards(numberToPop: 1, makeNewTopCardFaceup: true)
-                                foundationStack.addCard(card: candidate.card)
+                                if let topCard = candidate.stack.topCard(), topCard.value == candidate.card.value {
+                                    candidate.stack.popCards(numberToPop: 1, makeNewTopCardFaceup: true)
+                                    foundationStack.addCard(card: candidate.card)
+                                } else {
+                                    print("⚠️ Skipped move: card already moved")
+                                }
                                 
                                 candidate.view.refresh()
                                 foundationView.refresh()

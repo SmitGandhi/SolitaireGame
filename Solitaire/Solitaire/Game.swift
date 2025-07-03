@@ -73,6 +73,22 @@ class Game {
         }
     }
     
+    func generateSolvableDeck() -> [Int] {
+        var deck: [Int] = []
+        
+        // 1. Add ordered suits for Foundation pre-fill (A–K of each suit)
+        for suit in 0..<4 {
+            for rank in 0..<13 {
+                deck.append(suit * 13 + rank)
+            }
+        }
+        
+        // 2. Shuffle Tableau + Stock layout
+        deck.shuffle()
+        return deck
+    }
+    
+    
     func undoLastMove() {
         guard let last = moveHistory.popLast() else { return }
         

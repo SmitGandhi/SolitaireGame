@@ -29,7 +29,9 @@ final class SolitaireGameView: UIView {
         case gameWin        = "gamewin"
         case cardslide      = "CardSlide"
     }
+    
     weak var delegate: SolitaireGameViewDelegate?
+    
     private var testModeEnabled = true
     private var isAutoPlaying = false
 
@@ -472,7 +474,7 @@ extension SolitaireGameView {
                                with event: UIEvent?) {
         let touch = touches.first!
         let tapCount = touch.tapCount
-        if tapCount > 1 {
+        if tapCount == 1 {
             handleDoubleTap(inView: touch.view!)
             return
         }

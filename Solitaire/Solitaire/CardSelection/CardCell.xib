@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="23727" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23721"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="collection view cell content view" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CardCell" id="rjQ-KX-3GZ" customClass="CardCell" customModule="Solitaire" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="178" height="246"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="foA-6O-Nn5">
+                <rect key="frame" x="0.0" y="0.0" width="178" height="246"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gWW-y4-cTt">
+                        <rect key="frame" x="6" y="12" width="165" height="222"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="749" image="PlayingCard-back_2.png" translatesAutoresizingMaskIntoConstraints="NO" id="hzX-e6-xn4">
+                                <rect key="frame" x="20" y="8" width="125" height="164"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kKD-jM-jKF">
+                                <rect key="frame" x="30.666666666666657" y="180" width="104" height="38"/>
+                                <color key="backgroundColor" red="1" green="0.47058823529999999" blue="0.29411764709999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="16"/>
+                                <inset key="contentEdgeInsets" minX="16" minY="10" maxX="16" maxY="10"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="100 Points"/>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5w7-ML-GXJ">
+                                <rect key="frame" x="30" y="179" width="104" height="38"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="1" green="0.47058823529999999" blue="0.29411764709999999" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="16"/>
+                                <inset key="contentEdgeInsets" minX="16" minY="10" maxX="16" maxY="10"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="100 Points"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="kKD-jM-jKF" firstAttribute="centerX" secondItem="gWW-y4-cTt" secondAttribute="centerX" id="4fX-OF-pIN"/>
+                            <constraint firstItem="kKD-jM-jKF" firstAttribute="top" secondItem="hzX-e6-xn4" secondAttribute="bottom" constant="8" id="bQr-XZ-TFU"/>
+                            <constraint firstItem="hzX-e6-xn4" firstAttribute="leading" secondItem="gWW-y4-cTt" secondAttribute="leading" constant="20" id="icL-BW-OzH"/>
+                            <constraint firstItem="hzX-e6-xn4" firstAttribute="top" secondItem="gWW-y4-cTt" secondAttribute="top" constant="8" id="smD-RS-4PC"/>
+                            <constraint firstAttribute="bottom" secondItem="kKD-jM-jKF" secondAttribute="bottom" constant="4" id="tN7-2u-QbI"/>
+                            <constraint firstItem="hzX-e6-xn4" firstAttribute="centerX" secondItem="gWW-y4-cTt" secondAttribute="centerX" id="xbk-sk-L20"/>
+                        </constraints>
+                    </view>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="gWW-y4-cTt" firstAttribute="top" secondItem="foA-6O-Nn5" secondAttribute="top" constant="12" id="FMb-ul-DCg"/>
+                    <constraint firstItem="gWW-y4-cTt" firstAttribute="leading" secondItem="foA-6O-Nn5" secondAttribute="leading" constant="6" id="HF8-y1-9V6"/>
+                    <constraint firstAttribute="bottom" secondItem="gWW-y4-cTt" secondAttribute="bottom" constant="12" id="Tfo-Ph-UxL"/>
+                    <constraint firstAttribute="trailing" secondItem="gWW-y4-cTt" secondAttribute="trailing" constant="7" id="rVk-FQ-Onj"/>
+                </constraints>
+            </collectionViewCellContentView>
+            <size key="customSize" width="178" height="246"/>
+            <connections>
+                <outlet property="cardImageView" destination="hzX-e6-xn4" id="k2i-uE-Ksf"/>
+                <outlet property="containerView" destination="gWW-y4-cTt" id="IFX-9N-KAQ"/>
+                <outlet property="pointsLabel" destination="5w7-ML-GXJ" id="gK3-xq-mgQ"/>
+            </connections>
+            <point key="canvasLocation" x="74.809160305343511" y="101.40845070422536"/>
+        </collectionViewCell>
+    </objects>
+    <resources>
+        <image name="PlayingCard-back_2.png" width="253" height="379"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

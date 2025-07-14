@@ -19,8 +19,12 @@ class MainTabBarController: UIViewController {
         return UINavigationController(rootViewController: vc)
     }()
     
-    private let settingsVC = SettingsViewController()
-    
+    private lazy var settingsVC: UINavigationController = {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "CardSelectionViewController") as! CardSelectionViewController
+        return UINavigationController(rootViewController: vc)
+    }()
+
     private var tabButtons: [UIButton] = []
     private var currentTabIndex: Int = 1
     
@@ -28,7 +32,7 @@ class MainTabBarController: UIViewController {
     
     let tabOrder = [
         ["Title": "Daily Challenge","ID":0,"imageNames":"house","selectedImageNames":"house.fill"],
-        ["Title":"New Deal", "ID": 1,"imageNames":"play.circle","selectedImageNames":"play.circle.fill"],
+        //["Title":"New Deal", "ID": 1,"imageNames":"play.circle","selectedImageNames":"play.circle.fill"],
         ["Title":"Settings", "ID":2,"imageNames":"gearshape","selectedImageNames":"gearshape.fill"]]
     
     override func viewDidLoad() {
@@ -52,7 +56,7 @@ class MainTabBarController: UIViewController {
         ])
         
                 // Add buttons/icons
-       let selectors: [Selector] = [#selector(openChallenge), #selector(openPlay), #selector(openSettings)]
+       let selectors: [Selector] = [#selector(openChallenge), #selector(openSettings)]
         
         let stack = UIStackView()
         stack.axis = .horizontal
@@ -124,7 +128,7 @@ class MainTabBarController: UIViewController {
         switchToVC(playVC)
     }
     @objc private func openSettings() {
-        updateSelectedTab(index: 2)
+        updateSelectedTab(index: 1)
         switchToVC(settingsVC)
     }
     

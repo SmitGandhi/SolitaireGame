@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		07658CCD2E254905004D5A28 /* FSCalendar in Frameworks */ = {isa = PBXBuildFile; productRef = 07658CCC2E254905004D5A28 /* FSCalendar */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		07B2F5E72E0B44710089128D /* Solitaire.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Solitaire.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -36,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				07658CCD2E254905004D5A28 /* FSCalendar in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,8 +82,6 @@
 				07B2F5E92E0B44710089128D /* Solitaire */,
 			);
 			name = Solitaire;
-			packageProductDependencies = (
-			);
 			productName = Solitaire;
 			productReference = 07B2F5E72E0B44710089128D /* Solitaire.app */;
 			productType = "com.apple.product-type.application";
@@ -107,6 +110,9 @@
 			);
 			mainGroup = 07B2F5DE2E0B44710089128D;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				07658CCB2E254905004D5A28 /* XCRemoteSwiftPackageReference "FSCalendar" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 07B2F5E82E0B44710089128D /* Products */;
 			projectDirPath = "";
@@ -347,6 +353,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		07658CCB2E254905004D5A28 /* XCRemoteSwiftPackageReference "FSCalendar" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/WenchaoD/FSCalendar.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.8.3;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		07658CCC2E254905004D5A28 /* FSCalendar */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 07658CCB2E254905004D5A28 /* XCRemoteSwiftPackageReference "FSCalendar" */;
+			productName = FSCalendar;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 07B2F5DF2E0B44710089128D /* Project object */;
 }

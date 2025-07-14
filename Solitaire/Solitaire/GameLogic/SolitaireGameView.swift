@@ -21,6 +21,7 @@ private extension Selector {
 
 protocol SolitaireGameViewDelegate: AnyObject {
     func restartGame()
+    func backToHome()
 }
 
 final class SolitaireGameView: UIView {
@@ -110,7 +111,7 @@ final class SolitaireGameView: UIView {
 
         // Buttons
         let newDealButton = UIButton(frame: CGRect(x: 10.0, y: buttonY, width: buttonWidth, height: buttonHeight))
-        newDealButton.setTitle("New Deal", for: .normal)
+        newDealButton.setTitle("Back", for: .normal)
         newDealButton.setTitleColor(.white, for: .normal)
         newDealButton.contentHorizontalAlignment = .left
         newDealButton.titleLabel?.font = .systemFont(ofSize: buttonFontSize)
@@ -179,17 +180,19 @@ final class SolitaireGameView: UIView {
     }
     
     private func playToastSound(_ soundType: soundType) {
-        guard let soundURL = Bundle.main.url(forResource: soundType.rawValue, withExtension: "wav") else {
-            print("Toast sound file not found.")
-            return
-        }
-        
-        do {
-            toastSoundPlayer = try AVAudioPlayer(contentsOf: soundURL)
-            toastSoundPlayer?.prepareToPlay()
-            toastSoundPlayer?.play()
-        } catch {
-            print("Error playing toast sound: \(error.localizedDescription)")
+        if AppConstants.AppConfigurations.isSoundEnable{
+            guard let soundURL = Bundle.main.url(forResource: soundType.rawValue, withExtension: "wav") else {
+                print("Toast sound file not found.")
+                return
+            }
+            
+            do {
+                toastSoundPlayer = try AVAudioPlayer(contentsOf: soundURL)
+                toastSoundPlayer?.prepareToPlay()
+                toastSoundPlayer?.play()
+            } catch {
+                print("Error playing toast sound: \(error.localizedDescription)")
+            }
         }
     }
     //MARK: Solve the deck
@@ -367,11 +370,12 @@ final class SolitaireGameView: UIView {
     
     // MARK: Deal
     @objc func newDealAction() {
-        if testModeEnabled {
-            setupTestMode()  // ✅ Only do this
-        } else {
-            self.dealCards() // 🔁 fallback to normal
-        }
+        self.delegate?.backToHome()
+//        if testModeEnabled {
+//            setupTestMode()  // ✅ Only do this
+//        } else {
+//            self.dealCards() // 🔁 fallback to normal
+//        }
     }
     
     private func dealCards() {
@@ -474,7 +478,7 @@ extension SolitaireGameView {
                                with event: UIEvent?) {
         let touch = touches.first!
         let tapCount = touch.tapCount
-        if tapCount == 1 {
+        if tapCount > 1 {
             handleDoubleTap(inView: touch.view!)
             return
         }

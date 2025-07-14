@@ -18,14 +18,15 @@ public struct AppConstants {
 
         static var removeCellCounts: difficultyLevel = .easy
         static var isDarkModeEnabled: Bool = false
+        static var isSoundEnable: Bool = false
         
     }
     
     // MARK: - App Environemnts
     //Note:- Please add here App Environemnts
     enum appEnvironments : String{
-        case Dev            = "com.sessionm.chickensaladchick.dev"
-        case Live           = "com.cardeeo.chickensaladchick"
+        case Dev            = "com.game.solitaire.dev"
+        case Live           = ""
     }
     
    
@@ -65,7 +66,8 @@ public struct AppConstants {
         //App Color Set
         static let AppWhite             = UIColor(hex: "#FFFFFF")
         static let AppBlack             = UIColor(hex: "#000000")
-        static var BackGround           = AppConstants.AppConfigurations.isDarkModeEnabled ? UIColor(hex: "#121212") : UIColor(hex: "#F8F9FA")
+        static let TabColor             = UIColor.black.withAlphaComponent(0.8)
+        static var BackGround           = AppConstants.AppConfigurations.isDarkModeEnabled ? UIColor(hex: "#EFEFE6") : UIColor(hex: "#EFEFE6")
         static var Accent               = AppConstants.AppConfigurations.isDarkModeEnabled ? UIColor(hex: "#FFAB91") : UIColor(hex: "#FFC107")
         static var Highlight            = AppConstants.AppConfigurations.isDarkModeEnabled ? UIColor(hex: "#FFAB91") : UIColor(hex: "#FF7043")
         static var Text                 = AppConstants.AppConfigurations.isDarkModeEnabled ? UIColor(hex: "#FAFAFA") : UIColor(hex: "#212121")

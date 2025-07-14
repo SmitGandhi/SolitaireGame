@@ -8,6 +8,10 @@
 import UIKit
 
 class SolitaireGameViewController: UIViewController, SolitaireGameViewDelegate {
+    func backToHome() {
+        self.navigationController?.popViewController(animated: true)
+    }
+    
     private var gameView: SolitaireGameView?
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
@@ -16,6 +20,7 @@ class SolitaireGameViewController: UIViewController, SolitaireGameViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.isNavigationBarHidden = true
         self.loadNewGame()
     }
     
@@ -31,6 +36,10 @@ class SolitaireGameViewController: UIViewController, SolitaireGameViewDelegate {
     
     func restartGame() {
         loadNewGame()
+    }
+    
+    func backAction() {
+        self.navigationController?.popViewController(animated: true)
     }
 }
 

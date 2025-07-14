@@ -53,7 +53,7 @@ class CustomTabBarController: UIViewController {
     private let customTabBar = CustomTabBarView()
     private let playVC = SolitaireGameViewController()
     private let challengeVC = DailyChallengeViewController()
-    private let settingsVC = SettingsViewController()
+    private let settingsVC = SettingViewController()
 
     private var currentVC: UIViewController?
 

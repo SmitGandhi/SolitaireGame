@@ -15,3 +15,19 @@ extension Date{
     }
     
 }
+
+extension DateFormatter {
+    static let standardKeyFormat: DateFormatter = {
+        let df = DateFormatter()
+        df.dateFormat = "yyyy-MM-dd"
+        df.locale = Locale(identifier: "en_US_POSIX")
+        return df
+    }()
+    
+    static let fullDateTime: DateFormatter = {
+        let df = DateFormatter()
+        df.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        df.locale = Locale(identifier: "en_US_POSIX")
+        return df
+    }()
+}

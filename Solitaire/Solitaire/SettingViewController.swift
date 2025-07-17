@@ -10,6 +10,7 @@ import UIKit
 class SettingViewController: UIViewController {
     enum SettingsSection {
         case sound
+        case testing
         case legal
         case customization
     }
@@ -35,6 +36,7 @@ class SettingViewController: UIViewController {
     private func setupData() {
         settings = [
             (.sound, [.toggle(title: "Sound", isOn: true)]),
+            (.testing, [.toggle(title: "Testing", isOn: true)]),
             (.legal, [
                 .button(title: "Terms & Conditions", color: .black),
                 .button(title: "Privacy Policy", color: .black)
@@ -67,6 +69,7 @@ extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch settings[section].section {
         case .sound: return "Sound Settings"
+        case .testing: return "Testing"
         case .legal: return "Legal"
         case .customization: return "Customization"
         }
@@ -84,13 +87,24 @@ extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
             let cell = tableView.dequeueReusableCell(withIdentifier: "SwitchCell", for: indexPath) as! SwitchCell
             cell.backgroundColor = .clear
             cell.selectionStyle = .none
-            cell.configure(
-                with: title,
-                isOn: AppConstants.AppConfigurations.isSoundEnable,
-                symbolName: "speaker.wave.2.fill"
-            ) { newValue in
-                AppConstants.AppConfigurations.isSoundEnable = newValue
-                print("Sound toggled: \(newValue)")
+            if settings[indexPath.section].section == SettingsSection.sound {
+                cell.configure(
+                    with: title,
+                    isOn: AppConstants.AppConfigurations.isSoundEnable,
+                    symbolName: "speaker.wave.2.fill"
+                ) { newValue in
+                    AppConstants.AppConfigurations.isSoundEnable = newValue
+                    print("Sound toggled: \(newValue)")
+                }
+            }else{
+                cell.configure(
+                    with: title,
+                    isOn: AppConstants.AppConfigurations.testModeEnabled,
+                    symbolName: ""
+                ) { newValue in
+                    AppConstants.AppConfigurations.testModeEnabled = newValue
+                    print("Demo toggled: \(newValue)")
+                }
             }
             return cell
             

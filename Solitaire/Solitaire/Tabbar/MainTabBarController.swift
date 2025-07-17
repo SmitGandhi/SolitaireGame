@@ -21,7 +21,7 @@ class MainTabBarController: UIViewController {
     
     private lazy var settingsVC: UINavigationController = {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "CardSelectionViewController") as! CardSelectionViewController
+        let vc = storyboard.instantiateViewController(withIdentifier: "SettingViewController") as! SettingViewController
         return UINavigationController(rootViewController: vc)
     }()
 
@@ -147,4 +147,19 @@ class MainTabBarController: UIViewController {
         
         currentTabIndex = index
     }
+    
+    func hideCustomTabBar() {
+        UIView.animate(withDuration: 0.3) {
+            self.customTabBar.alpha = 0
+        }
+        self.customTabBar.isUserInteractionEnabled = false
+    }
+
+    func showCustomTabBar() {
+        UIView.animate(withDuration: 0.3) {
+            self.customTabBar.alpha = 1
+        }
+        self.customTabBar.isUserInteractionEnabled = true
+    }
+
 }

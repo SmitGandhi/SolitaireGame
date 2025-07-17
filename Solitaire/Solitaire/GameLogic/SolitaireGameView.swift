@@ -33,7 +33,6 @@ final class SolitaireGameView: UIView {
     
     weak var delegate: SolitaireGameViewDelegate?
     
-    private var testModeEnabled = true
     private var isAutoPlaying = false
 
     private var foundationStacks = [FoundationCardStackView]()
@@ -56,6 +55,7 @@ final class SolitaireGameView: UIView {
     private var secondsElapsed = 0
     private var moveCount = 0
     private var score = 0
+    var gameDate: String = ""
 
     private var timerStarted = false
     
@@ -67,7 +67,11 @@ final class SolitaireGameView: UIView {
         
         self.initStackViews()
         
-        self.dealCards()
+        if AppConstants.AppConfigurations.testModeEnabled {
+            self.setupTestMode()  // ✅ Only do this
+        } else {
+            self.dealCards() // 🔁 fallback to normal
+        }
     }
     
     private func initStackViews() {
@@ -371,11 +375,6 @@ final class SolitaireGameView: UIView {
     // MARK: Deal
     @objc func newDealAction() {
         self.delegate?.backToHome()
-//        if testModeEnabled {
-//            setupTestMode()  // ✅ Only do this
-//        } else {
-//            self.dealCards() // 🔁 fallback to normal
-//        }
     }
     
     private func dealCards() {
@@ -844,6 +843,18 @@ extension SolitaireGameView {
     
     private func showWinAnimation() {
         
+        //Store the game details
+        let record = ChallengeRecord(
+            dateKey: gameDate,
+            completed: true,
+            score: score,
+            moves: moveCount,
+            timeInSeconds: secondsElapsed
+        )
+        
+        ChallengeHistoryManager.shared.saveRecord(record)
+
+        
         self.playToastSound(.gameWin)
         self.showWinAlert()
         
@@ -889,10 +900,10 @@ extension SolitaireGameView {
     
     private func showWinAlert() {
         let alert = UIAlertController(title: "You Win!", message: "Start a new deal?", preferredStyle: .alert)
-        alert.addAction(UIAlertAction(title: "New Deal", style: .default, handler: { _ in
-            self.delegate?.restartGame()
+        alert.addAction(UIAlertAction(title: "Back", style: .default, handler: { _ in
+            self.delegate?.backToHome()
         }))
-        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+//        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
         if let vc = self.findViewController() {
             vc.present(alert, animated: true, completion: nil)

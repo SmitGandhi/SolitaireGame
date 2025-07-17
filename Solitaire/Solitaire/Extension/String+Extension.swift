@@ -175,36 +175,6 @@ extension String {
         
         return dateformatter.string(from: yearFormatDate ?? Date())
     }
-    
-//    func returnTitleAndMessageFromErrorString(alertTitle: Bool) -> (String, String) {
-//        
-//        var tupple = (title: "Title", body: "Body")
-//        
-//        let msg = self.components(separatedBy: "@@")
-//        
-//        if msg.count == 0 {
-//            
-//            tupple.title = AppConstants.AppStrings.CommonStrings.ERROR_T
-//            tupple.body = ""
-//        }
-//        else if msg.count == 1 {
-//            
-//            tupple.title = AppConstants.AppStrings.CommonStrings.ERROR_T
-//            tupple.body = msg.first ?? ""
-//        }
-//        else if msg.count == 2 {
-//            
-//            tupple.title = msg.last ?? ""
-//            tupple.body = msg.first ?? ""
-//        }
-//        
-//        if alertTitle {
-//            
-//            tupple.title = AppConstants.AppStrings.CommonStrings.ALERT_T
-//        }
-//        
-//        return tupple
-//    }
 }
 
 extension Array where Element: Equatable {

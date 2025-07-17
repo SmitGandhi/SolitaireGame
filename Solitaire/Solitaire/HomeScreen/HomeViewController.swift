@@ -109,7 +109,8 @@ class HomeViewController: UIViewController {
         
         if (sender.tag%3 == 0){
            //Daily Challange
-            self.navigationController?.pushViewController(DailyChallengeViewController(), animated: true)
+            let dailyChallengeViewController = DailyChallengeViewController() // or your challenge view controller
+            self.navigationController?.pushViewController(dailyChallengeViewController, animated: true)
         }else if (sender.tag%3 == 1){
             //Beat the timer
          }else {

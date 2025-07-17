@@ -139,3 +139,11 @@ class CustomTabBarController: UIViewController {
     @objc private func openPlay() { switchToVC(playVC) }
     @objc private func openSettings() { switchToVC(settingsVC) }
 }
+
+extension UIViewController {
+    func setTabBar(hidden: Bool) {
+        if let tabBarController = self.parent as? MainTabBarController {
+            hidden ? tabBarController.hideCustomTabBar() : tabBarController.showCustomTabBar()
+        }
+    }
+}

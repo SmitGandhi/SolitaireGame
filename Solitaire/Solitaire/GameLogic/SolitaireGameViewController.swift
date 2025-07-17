@@ -13,6 +13,7 @@ class SolitaireGameViewController: UIViewController, SolitaireGameViewDelegate {
     }
     
     private var gameView: SolitaireGameView?
+    var gameDate: String = ""
 
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
@@ -24,12 +25,27 @@ class SolitaireGameViewController: UIViewController, SolitaireGameViewDelegate {
         self.loadNewGame()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let mainTab = UIApplication.shared.windows.first?.rootViewController as? MainTabBarController {
+            mainTab.hideCustomTabBar()
+        }
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if let tabBarController = UIApplication.shared.windows.first?.rootViewController as? MainTabBarController {
+            tabBarController.showCustomTabBar()
+        }
+    }
+    
     @objc func loadNewGame() {
         // Remove old view if any
         gameView?.removeFromSuperview()
         
         let solitaireView = SolitaireGameView(frame: self.view.bounds)
         solitaireView.delegate = self
+        solitaireView.gameDate = gameDate
         self.view.addSubview(solitaireView)
         gameView = solitaireView
     }

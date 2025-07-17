@@ -92,8 +92,6 @@ extension UIViewController {
             work()
         }
     }
-
-
 }
 
 //MARK:- get view controller for nav controller

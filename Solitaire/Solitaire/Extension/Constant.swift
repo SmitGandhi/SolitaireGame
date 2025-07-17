@@ -19,7 +19,7 @@ public struct AppConstants {
         static var removeCellCounts: difficultyLevel = .easy
         static var isDarkModeEnabled: Bool = false
         static var isSoundEnable: Bool = false
-        
+        static var testModeEnabled: Bool = false
     }
     
     // MARK: - App Environemnts

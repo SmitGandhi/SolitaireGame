@@ -105,14 +105,21 @@ class HomeViewController: UIViewController {
     }
     
     @objc func handlePlayButtonTapped(_ sender:UIButton) {
-        print("Button tap: \(sender.tag%3)")
+        startTheGame(gameType: sender.tag % originalCards.count)
+    }
+    
+    private func startTheGame(gameType: Int){
+        print("Button tap: \(gameType)")
         
-        if (sender.tag%3 == 0){
+        if (gameType == 0){
            //Daily Challange
             let dailyChallengeViewController = DailyChallengeViewController() // or your challenge view controller
             self.navigationController?.pushViewController(dailyChallengeViewController, animated: true)
-        }else if (sender.tag%3 == 1){
+        }else if (gameType == 1){
             //Beat the timer
+            let solitaireGameViewController = SolitaireGameViewController()
+            solitaireGameViewController.gameTypeStr = .TimeAttack
+            self.navigationController?.pushViewController(solitaireGameViewController, animated: true)
          }else {
              //Random Challange
           }
@@ -159,6 +166,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
         }
         
         let selectedCard = cards[indexPath.item % originalCards.count]
+        startTheGame(gameType: indexPath.item % originalCards.count)
         print("📍 Tapped card: \(selectedCard.title)")
     }
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {

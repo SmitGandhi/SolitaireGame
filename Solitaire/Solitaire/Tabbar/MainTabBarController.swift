@@ -149,16 +149,16 @@ class MainTabBarController: UIViewController {
     }
     
     func hideCustomTabBar() {
-        UIView.animate(withDuration: 0.3) {
+//        UIView.animate(withDuration: 0.1) {
             self.customTabBar.alpha = 0
-        }
+//        }
         self.customTabBar.isUserInteractionEnabled = false
     }
 
     func showCustomTabBar() {
-        UIView.animate(withDuration: 0.3) {
+//        UIView.animate(withDuration: 0.1) {
             self.customTabBar.alpha = 1
-        }
+//        }
         self.customTabBar.isUserInteractionEnabled = true
     }
 

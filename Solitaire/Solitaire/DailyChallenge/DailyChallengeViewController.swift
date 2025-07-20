@@ -42,7 +42,7 @@ class DailyChallengeViewController: UIViewController, FSCalendarDelegate, FSCale
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         self.updateBestOfMonth()
         calendar.reloadData()
-
+        updateTheRecordView()
         if let mainTab = UIApplication.shared.windows.first?.rootViewController as? MainTabBarController {
             mainTab.hideCustomTabBar()
         }
@@ -121,9 +121,10 @@ class DailyChallengeViewController: UIViewController, FSCalendarDelegate, FSCale
         recordContainerView.addSubview(continueLabel)
 
         // Continue Button
-        continueButton = UIButton(type: .system)
+        continueButton = UIButton(type: .custom)
         continueButton.translatesAutoresizingMaskIntoConstraints = false
         continueButton.appPrimaryButton(isEnable: true, title: "Continue", titleFont: AppConstants.Fonts.MarkerFeltThin_16!)
+        continueButton.layer.cornerRadius = 8
         continueButton.addTarget(self, action: #selector(continueTapped), for: .touchUpInside)
         recordContainerView.addSubview(continueButton)
 
@@ -199,6 +200,7 @@ class DailyChallengeViewController: UIViewController, FSCalendarDelegate, FSCale
         // Push your GameViewController with selected date passed
         let solitaireGameViewController = SolitaireGameViewController()
         solitaireGameViewController.gameDate = selectedDate
+        solitaireGameViewController.gameTypeStr = .DailyChallange
         self.navigationController?.pushViewController(solitaireGameViewController, animated: true)
     }
     
@@ -270,6 +272,35 @@ class DailyChallengeViewController: UIViewController, FSCalendarDelegate, FSCale
         updateBestOfMonth()
     }
 
+    private func updateTheRecordView() {
+        guard let date = calendar.selectedDate else { return }
+        let key = DateFormatter.standardKeyFormat.string(from: date)
+
+        recordContainerView.isHidden = false
+
+        if let record = ChallengeHistoryManager.shared.records.first(where: { $0.dateKey == key }) {
+            // ✅ Already played
+            recordLabel.text = """
+            🧠 Moves: \(record.moves)
+            ⏱ Time: \(record.timeInSeconds) sec
+            💰 Score: \(record.score)
+            """
+            continueButton.isHidden = true
+            continueLabel.isHidden = true
+            recordLabel.isHidden = false
+        } else if date <= Date() {
+            // ✅ Not played
+            selectedDate = key
+            continueLabel.text = "You haven’t played this day yet."
+            continueButton.isHidden = false
+            continueLabel.isHidden = false
+            recordLabel.isHidden = true
+        } else {
+            // Future date
+            recordContainerView.isHidden = true
+            
+        }
+    }
     private func updateBestOfMonth() {
         
         playedDates = ChallengeHistoryManager.shared.records

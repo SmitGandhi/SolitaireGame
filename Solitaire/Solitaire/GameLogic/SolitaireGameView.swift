@@ -24,12 +24,20 @@ protocol SolitaireGameViewDelegate: AnyObject {
     func backToHome()
 }
 
+enum gameType:String{
+    case DailyChallange
+    case TimeAttack
+    case RandomGame
+}
+
 final class SolitaireGameView: UIView {
     enum soundType : String{
         case noHintToast    = "toast"
         case gameWin        = "gamewin"
         case cardslide      = "CardSlide"
     }
+    
+    var gameTypeStr:gameType = .DailyChallange
     
     weak var delegate: SolitaireGameViewDelegate?
     
@@ -52,7 +60,7 @@ final class SolitaireGameView: UIView {
     private var scoreLabel: UILabel!
 
     private var timer: Timer?
-    private var secondsElapsed = 0
+    var secondsElapsed = 0
     private var moveCount = 0
     private var score = 0
     var gameDate: String = ""
@@ -64,7 +72,6 @@ final class SolitaireGameView: UIView {
         super.init(frame: frame)
         
         self.backgroundColor = UIColor(hex: 0x004D2C)
-        
         self.initStackViews()
         
         if AppConstants.AppConfigurations.testModeEnabled {
@@ -137,17 +144,6 @@ final class SolitaireGameView: UIView {
         undoButton.addTarget(self, action: .undoTap, for: .touchUpInside)
         self.addSubview(undoButton)
 
-//        let solveButton = UIButton(frame: CGRect(x: (screenWidth / 2 - buttonWidth / 2), y: buttonY, width: buttonWidth, height: buttonHeight))
-//        solveButton.setTitle("Solve", for: .normal)
-//        solveButton.setTitleColor(.white, for: .normal)
-//        solveButton.titleLabel?.font = .systemFont(ofSize: buttonFontSize)
-//        solveButton.addTarget(self, action: .solveTap, for: .touchUpInside)
-//        self.addSubview(solveButton)
-
-        
-//        newDealButton.backgroundColor  = .black
-//        hintButton.backgroundColor  = .black
-//        undoButton.backgroundColor  = .black
         
         // Labels
         let yOffset = buttonY + buttonHeight + 5
@@ -164,11 +160,15 @@ final class SolitaireGameView: UIView {
         }
         timerLabel.textAlignment = .left
         scoreLabel.textAlignment = .right
+        
+        if gameTypeStr == .DailyChallange {
+            secondsElapsed = 0
+        }else if gameTypeStr == .TimeAttack {
+            secondsElapsed = AppConstants.AppConfigurations.timerGameCount
+        }
+        
         updateStatsLabels()
         
-//        timerLabel.backgroundColor = .blue
-//        movesLabel.backgroundColor = .blue
-//        scoreLabel.backgroundColor = .blue
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -382,7 +382,11 @@ final class SolitaireGameView: UIView {
         
         moveCount = 0
         score = 0
-        secondsElapsed = 0
+        if gameTypeStr == .DailyChallange {
+            secondsElapsed = 0
+        }else if gameTypeStr == .TimeAttack {
+            secondsElapsed = AppConstants.AppConfigurations.timerGameCount
+        }
         timer?.invalidate()
         timer = nil
         timerStarted = false
@@ -725,7 +729,18 @@ extension SolitaireGameView {
     
     private func startTimer() {
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
-            self.secondsElapsed += 1
+            if self.gameTypeStr == .DailyChallange {
+                self.secondsElapsed += 1
+            } else if self.gameTypeStr == .TimeAttack {
+                self.secondsElapsed -= 1
+                if self.secondsElapsed <= 0 {
+                    self.showLoseAlert()
+                    
+                    // ⏹ Stop the timer
+                    self.timer?.invalidate()
+                    self.timer = nil
+                }
+            }
             self.updateStatsLabels()
         }
     }
@@ -903,7 +918,21 @@ extension SolitaireGameView {
         alert.addAction(UIAlertAction(title: "Back", style: .default, handler: { _ in
             self.delegate?.backToHome()
         }))
-//        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        if let vc = self.findViewController() {
+            vc.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    private func showLoseAlert() {
+        let alert = UIAlertController(title: "You Loss!", message: "Let's starts with the new deal.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "New Deal", style: .default, handler: { _ in
+            if AppConstants.AppConfigurations.testModeEnabled {
+                self.setupTestMode()  // ✅ Only do this
+            } else {
+                self.dealCards() // 🔁 fallback to normal
+            }
+        }))
         
         if let vc = self.findViewController() {
             vc.present(alert, animated: true, completion: nil)

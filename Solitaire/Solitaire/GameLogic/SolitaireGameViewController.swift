@@ -14,7 +14,7 @@ class SolitaireGameViewController: UIViewController, SolitaireGameViewDelegate {
     
     private var gameView: SolitaireGameView?
     var gameDate: String = ""
-
+    var gameTypeStr: gameType = .TimeAttack
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -27,15 +27,17 @@ class SolitaireGameViewController: UIViewController, SolitaireGameViewDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        if let mainTab = UIApplication.shared.windows.first?.rootViewController as? MainTabBarController {
-            mainTab.hideCustomTabBar()
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let root = windowScene.windows.first?.rootViewController as? MainTabBarController {
+            root.hideCustomTabBar()
         }
     }
-
+    
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        if let tabBarController = UIApplication.shared.windows.first?.rootViewController as? MainTabBarController {
-            tabBarController.showCustomTabBar()
+        if let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+           let root = windowScene.windows.first?.rootViewController as? MainTabBarController {
+            root.showCustomTabBar()
         }
     }
     
@@ -46,6 +48,11 @@ class SolitaireGameViewController: UIViewController, SolitaireGameViewDelegate {
         let solitaireView = SolitaireGameView(frame: self.view.bounds)
         solitaireView.delegate = self
         solitaireView.gameDate = gameDate
+        solitaireView.gameTypeStr = gameTypeStr
+        if gameTypeStr == .TimeAttack {
+            solitaireView.secondsElapsed = AppConstants.AppConfigurations.timerGameCount
+        }
+        
         self.view.addSubview(solitaireView)
         gameView = solitaireView
     }

@@ -27,7 +27,8 @@ class SettingViewController: UIViewController {
         super.viewDidLoad()
         
         tblView.backgroundColor = AppConstants.Colors.BackGround
-
+        self.navigationItem.title = "Settings"
+        
         // Do any additional setup after loading the view.
         setupData()
         setupTableView()

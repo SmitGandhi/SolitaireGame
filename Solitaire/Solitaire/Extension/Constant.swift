@@ -20,6 +20,7 @@ public struct AppConstants {
         static var isDarkModeEnabled: Bool = false
         static var isSoundEnable: Bool = false
         static var testModeEnabled: Bool = false
+        static var timerGameCount: Int = 300
     }
     
     // MARK: - App Environemnts

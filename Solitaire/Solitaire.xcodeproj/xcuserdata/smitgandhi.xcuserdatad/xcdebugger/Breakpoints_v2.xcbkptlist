@@ -78,8 +78,8 @@
             filePath = "Solitaire/GameLogic/SolitaireGameView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "855"
-            endingLineNumber = "855"
+            startingLineNumber = "870"
+            endingLineNumber = "870"
             landmarkName = "showWinAnimation()"
             landmarkType = "7">
          </BreakpointContent>
@@ -98,36 +98,6 @@
             endingLineNumber = "21"
             landmarkName = "saveRecord(_:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "8ADD3FFF-9C69-4973-B18D-CDE201363432 - eb7209694438d729"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Solitaire.ChallengeHistoryManager.saveRecord(Solitaire.ChallengeRecord) -&gt; ()"
-                  moduleName = "Solitaire.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/smitgandhi/Documents/Github/iOS%20Projects/Solitaire/Code/Solitaire/Solitaire/DailyChallenge/ChallengeHistoryManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "21"
-                  endingLineNumber = "21">
-               </Location>
-               <Location
-                  uuid = "8ADD3FFF-9C69-4973-B18D-CDE201363432 - 66bb2f11cd930a5a"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Solitaire.ChallengeRecord) -&gt; Swift.Bool in Solitaire.ChallengeHistoryManager.saveRecord(Solitaire.ChallengeRecord) -&gt; ()"
-                  moduleName = "Solitaire.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/smitgandhi/Documents/Github/iOS%20Projects/Solitaire/Code/Solitaire/Solitaire/DailyChallenge/ChallengeHistoryManager.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "21"
-                  endingLineNumber = "21">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -140,41 +110,9 @@
             filePath = "Solitaire/GameLogic/SolitaireGameViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "48"
-            endingLineNumber = "48"
+            startingLineNumber = "50"
+            endingLineNumber = "50"
             landmarkName = "loadNewGame()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "4A3B00F3-4F2C-420D-BE19-0A379FE84EBA"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Solitaire/HomeScreen/HomeViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "113"
-            endingLineNumber = "113"
-            landmarkName = "handlePlayButtonTapped(_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "1CDBCF9C-62D0-4C96-85AA-62FAC302D846"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Solitaire/DailyChallenge/DailyChallengeViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "244"
-            endingLineNumber = "244"
-            landmarkName = "calendar(_:didSelect:at:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -188,8 +126,8 @@
             filePath = "Solitaire/DailyChallenge/DailyChallengeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "202"
-            endingLineNumber = "202"
+            startingLineNumber = "204"
+            endingLineNumber = "204"
             landmarkName = "continueTapped()"
             landmarkType = "7">
          </BreakpointContent>
@@ -245,93 +183,65 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "EBA37A13-BE27-4FCB-A3B9-C04E4DC643A8"
+            uuid = "FEC53015-4D16-4276-87B5-1E72E779E2EB"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Solitaire/Tabbar/MainTabBarController.swift"
+            filePath = "Solitaire/DailyChallenge/DailyChallengeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "152"
-            endingLineNumber = "152"
-            landmarkName = "hideCustomTabBar()"
+            startingLineNumber = "311"
+            endingLineNumber = "311"
+            landmarkName = "updateBestOfMonth()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "EBA37A13-BE27-4FCB-A3B9-C04E4DC643A8 - 1823f3d056dfd718"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Solitaire.MainTabBarController.hideCustomTabBar() -&gt; ()"
-                  moduleName = "Solitaire.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/smitgandhi/Documents/Github/iOS%20Projects/Solitaire/Code/Solitaire/Solitaire/Tabbar/MainTabBarController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "152"
-                  endingLineNumber = "152">
-               </Location>
-               <Location
-                  uuid = "EBA37A13-BE27-4FCB-A3B9-C04E4DC643A8 - ec9ea26ab57ec135"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; () in Solitaire.MainTabBarController.hideCustomTabBar() -&gt; ()"
-                  moduleName = "Solitaire.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/smitgandhi/Documents/Github/iOS%20Projects/Solitaire/Code/Solitaire/Solitaire/Tabbar/MainTabBarController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "153"
-                  endingLineNumber = "153">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "F7CF746E-F7B5-4CD4-8525-EB1E81F5AC8C"
+            uuid = "C5472DCA-6E82-4D12-A4A6-A60617036134"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Solitaire/Tabbar/MainTabBarController.swift"
+            filePath = "Solitaire/DailyChallenge/DailyChallengeViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "159"
-            endingLineNumber = "159"
-            landmarkName = "showCustomTabBar()"
+            startingLineNumber = "231"
+            endingLineNumber = "231"
+            landmarkName = "calendar(_:didSelect:at:)"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "F7CF746E-F7B5-4CD4-8525-EB1E81F5AC8C - 746cab56ffb90c98"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Solitaire.MainTabBarController.showCustomTabBar() -&gt; ()"
-                  moduleName = "Solitaire.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/smitgandhi/Documents/Github/iOS%20Projects/Solitaire/Code/Solitaire/Solitaire/Tabbar/MainTabBarController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "159"
-                  endingLineNumber = "159">
-               </Location>
-               <Location
-                  uuid = "F7CF746E-F7B5-4CD4-8525-EB1E81F5AC8C - 19489faae461b667"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 () -&gt; () in Solitaire.MainTabBarController.showCustomTabBar() -&gt; ()"
-                  moduleName = "Solitaire.debug.dylib"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/smitgandhi/Documents/Github/iOS%20Projects/Solitaire/Code/Solitaire/Solitaire/Tabbar/MainTabBarController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "160"
-                  endingLineNumber = "160">
-               </Location>
-            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "06CCEB39-48A1-4769-8E45-A4721E8923B0"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Solitaire/GameLogic/SolitaireGameView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "167"
+            endingLineNumber = "167"
+            landmarkName = "initStackViews()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7A6BEE04-ADCB-499A-AACA-BB9221AF2001"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Solitaire/GameLogic/SolitaireGameView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "165"
+            endingLineNumber = "165"
+            landmarkName = "initStackViews()"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

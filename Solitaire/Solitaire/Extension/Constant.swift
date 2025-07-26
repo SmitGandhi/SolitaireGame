@@ -21,6 +21,8 @@ public struct AppConstants {
         static var isSoundEnable: Bool = false
         static var testModeEnabled: Bool = false
         static var timerGameCount: Int = 300
+        static var gameTypeStr:gameType = .DailyChallange
+        static var cardBG:String = "IN_card"
     }
     
     // MARK: - App Environemnts

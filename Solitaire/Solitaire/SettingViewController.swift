@@ -17,7 +17,7 @@ class SettingViewController: UIViewController {
     
     enum SettingsItem {
         case toggle(title: String, isOn: Bool)
-        case button(title: String, color: UIColor)
+        case button(title: String, color: UIColor, id: String)
     }
     
     @IBOutlet weak var tblView: UITableView!
@@ -39,12 +39,12 @@ class SettingViewController: UIViewController {
             (.sound, [.toggle(title: "Sound", isOn: true)]),
             (.testing, [.toggle(title: "Testing", isOn: true)]),
             (.legal, [
-                .button(title: "Terms & Conditions", color: .black),
-                .button(title: "Privacy Policy", color: .black)
+                .button(title: "Terms & Conditions", color: .black, id: "T&C"),
+                .button(title: "Privacy Policy", color: .black, id: "PP")
             ]),
             (.customization, [
-                .button(title: "Change Card", color: UIColor.systemOrange),
-                .button(title: "Change Background", color: UIColor.systemOrange)
+                .button(title: "Change Card", color: UIColor.systemOrange, id: "ChangeCard"),
+                .button(title: "Change Background", color: UIColor.systemOrange, id: "ChangeBackground")
             ])
         ]
     }
@@ -55,6 +55,12 @@ class SettingViewController: UIViewController {
         tblView.separatorStyle = .none
         tblView.register(SwitchCell.self, forCellReuseIdentifier: "SwitchCell")
         tblView.register(ButtonCell.self, forCellReuseIdentifier: "ButtonCell")
+    }
+    
+    private func openCardSelection() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "CardSelectionViewController") as! CardSelectionViewController
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }
 
@@ -109,7 +115,7 @@ extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
             }
             return cell
             
-        case .button(let title, let color):
+        case .button(let title, let color, let id):
             
             let cell = tableView.dequeueReusableCell(withIdentifier: "ButtonCell", for: indexPath) as! ButtonCell
             cell.backgroundColor = .clear
@@ -121,6 +127,24 @@ extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
                 cell.button.appPrimaryButton(isEnable: true, title: title, titleFont: AppConstants.Fonts.MarkerFeltThin_16!)
             }
             
+            cell.buttonAction = { [weak self] in
+                switch id {
+                case "T&C":
+                    print("Open Terms & Conditions screen")
+                    // self?.openTerms()
+                case "PP":
+                    print("Open Privacy Policy screen")
+                    // self?.openPrivacyPolicy()
+                case "ChangeCard":
+                    print("Open Change Card screen")
+                     self?.openCardSelection()
+                case "ChangeBackground":
+                    print("Open Change Background screen")
+                    // self?.openBackgroundPicker()
+                default:
+                    break
+                }
+            }
             cell.button.layer.cornerRadius = 22
             return cell
         }

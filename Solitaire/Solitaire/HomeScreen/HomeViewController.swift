@@ -118,10 +118,13 @@ class HomeViewController: UIViewController {
         }else if (gameType == 1){
             //Beat the timer
             let solitaireGameViewController = SolitaireGameViewController()
-            solitaireGameViewController.gameTypeStr = .TimeAttack
+            AppConstants.AppConfigurations.gameTypeStr = .TimeAttack
             self.navigationController?.pushViewController(solitaireGameViewController, animated: true)
          }else {
              //Random Challange
+             let solitaireGameViewController = SolitaireGameViewController()
+             AppConstants.AppConfigurations.gameTypeStr = .RandomGame
+             self.navigationController?.pushViewController(solitaireGameViewController, animated: true)
           }
     }
 }

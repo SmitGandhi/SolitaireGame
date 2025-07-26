@@ -200,7 +200,7 @@ class DailyChallengeViewController: UIViewController, FSCalendarDelegate, FSCale
         // Push your GameViewController with selected date passed
         let solitaireGameViewController = SolitaireGameViewController()
         solitaireGameViewController.gameDate = selectedDate
-        solitaireGameViewController.gameTypeStr = .DailyChallange
+        AppConstants.AppConfigurations.gameTypeStr = .DailyChallange
         self.navigationController?.pushViewController(solitaireGameViewController, animated: true)
     }
     

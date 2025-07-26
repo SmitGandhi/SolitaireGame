@@ -179,27 +179,27 @@
             <point key="canvasLocation" x="1686" y="-4"/>
         </scene>
         <!--Card Selection View Controller-->
-        <scene sceneID="tfx-U7-BYB">
+        <scene sceneID="Cue-EU-f81">
             <objects>
-                <viewController storyboardIdentifier="CardSelectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="qGE-oC-Vo4" customClass="CardSelectionViewController" customModule="Solitaire" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="gCN-X6-x93">
+                <viewController storyboardIdentifier="CardSelectionViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="dx1-Y2-l2S" customClass="CardSelectionViewController" customModule="Solitaire" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Hzv-Cp-R08">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="uD7-sx-6n1">
-                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ItG-0l-8zG">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="6QH-ut-4ks">
+                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="PSz-hD-yKj">
                                     <size key="itemSize" width="128" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="8qO-8c-HnP">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="9yL-3J-Ilr">
                                         <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="iJL-4H-I1B">
+                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="6M9-gE-Rko">
                                             <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </collectionViewCellContentView>
@@ -207,22 +207,22 @@
                                 </cells>
                             </collectionView>
                         </subviews>
-                        <viewLayoutGuide key="safeArea" id="83P-DQ-Vyh"/>
+                        <viewLayoutGuide key="safeArea" id="DhN-sL-aMu"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="83P-DQ-Vyh" firstAttribute="bottom" secondItem="uD7-sx-6n1" secondAttribute="bottom" id="C5w-m7-iRD"/>
-                            <constraint firstItem="uD7-sx-6n1" firstAttribute="leading" secondItem="83P-DQ-Vyh" secondAttribute="leading" id="DJi-zM-m79"/>
-                            <constraint firstItem="83P-DQ-Vyh" firstAttribute="trailing" secondItem="uD7-sx-6n1" secondAttribute="trailing" id="xTv-h4-Sjc"/>
-                            <constraint firstItem="uD7-sx-6n1" firstAttribute="top" secondItem="83P-DQ-Vyh" secondAttribute="top" id="ycX-51-0WD"/>
+                            <constraint firstItem="ItG-0l-8zG" firstAttribute="top" secondItem="Hzv-Cp-R08" secondAttribute="top" id="3Un-Od-Zjc"/>
+                            <constraint firstItem="ItG-0l-8zG" firstAttribute="leading" secondItem="DhN-sL-aMu" secondAttribute="leading" id="DhC-Jp-gq1"/>
+                            <constraint firstItem="ItG-0l-8zG" firstAttribute="trailing" secondItem="DhN-sL-aMu" secondAttribute="trailing" id="iGF-Qh-2iw"/>
+                            <constraint firstItem="ItG-0l-8zG" firstAttribute="bottom" secondItem="DhN-sL-aMu" secondAttribute="bottom" id="vJj-w0-lEV"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="collectionView" destination="uD7-sx-6n1" id="XZb-ta-TZn"/>
+                        <outlet property="collectionView" destination="ItG-0l-8zG" id="um7-8D-L4a"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="6MV-tm-uG3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="RIM-dt-CnF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2431" y="-2"/>
+            <point key="canvasLocation" x="2490.4000000000001" y="-4.0479760119940034"/>
         </scene>
     </scenes>
     <resources>

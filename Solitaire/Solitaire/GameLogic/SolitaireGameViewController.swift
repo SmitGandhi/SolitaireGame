@@ -14,7 +14,7 @@ class SolitaireGameViewController: UIViewController, SolitaireGameViewDelegate {
     
     private var gameView: SolitaireGameView?
     var gameDate: String = ""
-    var gameTypeStr: gameType = .TimeAttack
+    
     override var preferredStatusBarStyle: UIStatusBarStyle {
         return .lightContent
     }
@@ -43,16 +43,12 @@ class SolitaireGameViewController: UIViewController, SolitaireGameViewDelegate {
     
     @objc func loadNewGame() {
         // Remove old view if any
+        Model.sharedInstance.resetGameState()  // 🔁 reset the model including card views
         gameView?.removeFromSuperview()
         
         let solitaireView = SolitaireGameView(frame: self.view.bounds)
         solitaireView.delegate = self
         solitaireView.gameDate = gameDate
-        solitaireView.gameTypeStr = gameTypeStr
-        if gameTypeStr == .TimeAttack {
-            solitaireView.secondsElapsed = AppConstants.AppConfigurations.timerGameCount
-        }
-        
         self.view.addSubview(solitaireView)
         gameView = solitaireView
     }

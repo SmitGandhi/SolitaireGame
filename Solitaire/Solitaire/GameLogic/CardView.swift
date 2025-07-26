@@ -31,7 +31,6 @@ enum Suit: Int {
 
 // UIView that displays a card
 final class CardView: UIView {
-    static let faceDownImage = UIImage(named: "PlayingCard-back_3.png")
     
     // the card value is its position in the 0..51 array of possible card values. see
     // getCardSuitAndRank to see how suit and rank are determined from the value
@@ -145,7 +144,7 @@ final class CardView: UIView {
         self.rankLabel.text = getDisplayValueForRank(rank: rank)
         self.rankLabel.textColor = color
         self.rankLabel.font = UIFont(name: "Palatino-Bold", size: scaled(value: 20.0))
-        self.backgroundImageView.image = CardView.faceDownImage
+        self.backgroundImageView.image = UIImage(named: AppConstants.AppConfigurations.cardBG) //CardView.faceDownImage
         
         self.addSubview(self.mainImageView)
         self.addSubview(self.suitImageView)

@@ -11,9 +11,9 @@ class CardCell: UICollectionViewCell {
 
     static let identifier = "CardCell"
 
-    @IBOutlet weak var containerView: UIView!
     @IBOutlet weak var cardImageView: UIImageView!
     @IBOutlet weak var pointsLabel: UIButton!
+    @IBOutlet weak var flagContainerView: UIView!
     
     let overlayView = UIView()
 
@@ -24,14 +24,12 @@ class CardCell: UICollectionViewCell {
     }
     
     private func setupViews() {
-        containerView.layer.cornerRadius = 16
-        containerView.clipsToBounds = true
-        containerView.backgroundColor = .blue
+//        flagContainerView.layer.cornerRadius = 16
+//        flagContainerView.clipsToBounds = true
+//        flagContainerView.backgroundColor = .blue
         
-        contentView.backgroundColor = .clear
+        flagContainerView.backgroundColor = .clear
 
-        cardImageView.contentMode = .scaleAspectFit
-        cardImageView.translatesAutoresizingMaskIntoConstraints = false
 
         overlayView.translatesAutoresizingMaskIntoConstraints = false
         overlayView.backgroundColor = UIColor.black.withAlphaComponent(0.4)
@@ -71,7 +69,7 @@ class CardCell: UICollectionViewCell {
     }
 
     func configure(with item: CardItem) {
-        cardImageView.image = item.image
+        cardImageView.image = UIImage(named: item.imageString)
 
         switch item.state {
         case .purchasedSelected:

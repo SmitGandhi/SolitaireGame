@@ -37,8 +37,6 @@ final class SolitaireGameView: UIView {
         case cardslide      = "CardSlide"
     }
     
-    var gameTypeStr:gameType = .DailyChallange
-    
     weak var delegate: SolitaireGameViewDelegate?
     
     private var isAutoPlaying = false
@@ -66,21 +64,55 @@ final class SolitaireGameView: UIView {
     var gameDate: String = ""
 
     private var timerStarted = false
-    
+    private var taskLabel: UILabel!
+
     //MARK: Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         self.backgroundColor = UIColor(hex: 0x004D2C)
         self.initStackViews()
-        
-        if AppConstants.AppConfigurations.testModeEnabled {
-            self.setupTestMode()  // ✅ Only do this
-        } else {
-            self.dealCards() // 🔁 fallback to normal
+
+        self.setupTaskLabel()
+
+        if AppConstants.AppConfigurations.gameTypeStr == .RandomGame {
+            Game.sharedInstance.generateRandomTask()
+            taskLabel.text = Game.sharedInstance.currentRandomTask?.description ?? ""
+            taskLabel.isHidden = false
+                        
+            if AppConstants.AppConfigurations.testModeEnabled {
+                self.setupTestMode()  // ✅ Only do this
+            } else {
+                self.dealCards() // 🔁 fallback to normal
+            }
+            
+        }else{
+            taskLabel.isHidden = true
+            if AppConstants.AppConfigurations.testModeEnabled {
+                self.setupTestMode()  // ✅ Only do this
+            } else {
+                self.dealCards() // 🔁 fallback to normal
+            }
         }
     }
     
+    private func setupTaskLabel() {
+        taskLabel = UILabel()
+        taskLabel.translatesAutoresizingMaskIntoConstraints = false
+        taskLabel.textAlignment = .center
+        taskLabel.font = .systemFont(ofSize: 16, weight: .semibold)
+        taskLabel.textColor = .systemBlue
+        taskLabel.numberOfLines = 0
+        taskLabel.text = "" // Default empty
+        self.addSubview(taskLabel)
+
+        NSLayoutConstraint.activate([
+            taskLabel.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 8),
+            taskLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
+            taskLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
+        ])
+    }
+ 
     private func initStackViews() {
         let screenWidth = UIScreen.main.bounds.width
         let screenHeight = UIScreen.main.bounds.height
@@ -161,9 +193,9 @@ final class SolitaireGameView: UIView {
         timerLabel.textAlignment = .left
         scoreLabel.textAlignment = .right
         
-        if gameTypeStr == .DailyChallange {
+        if AppConstants.AppConfigurations.gameTypeStr == .DailyChallange {
             secondsElapsed = 0
-        }else if gameTypeStr == .TimeAttack {
+        }else if AppConstants.AppConfigurations.gameTypeStr == .TimeAttack {
             secondsElapsed = AppConstants.AppConfigurations.timerGameCount
         }
         
@@ -382,9 +414,9 @@ final class SolitaireGameView: UIView {
         
         moveCount = 0
         score = 0
-        if gameTypeStr == .DailyChallange {
+        if AppConstants.AppConfigurations.gameTypeStr == .DailyChallange {
             secondsElapsed = 0
-        }else if gameTypeStr == .TimeAttack {
+        }else if AppConstants.AppConfigurations.gameTypeStr == .TimeAttack {
             secondsElapsed = AppConstants.AppConfigurations.timerGameCount
         }
         timer?.invalidate()
@@ -722,6 +754,8 @@ extension SolitaireGameView {
             startAutoPlayToFoundation()
         }
         
+        if AppConstants.AppConfigurations.gameTypeStr == .RandomGame { self.checkGoalMidGame() }
+
         if checkWinCondition() {
             showWinAnimation()
         }
@@ -729,9 +763,9 @@ extension SolitaireGameView {
     
     private func startTimer() {
         timer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true) { _ in
-            if self.gameTypeStr == .DailyChallange {
+            if AppConstants.AppConfigurations.gameTypeStr == .DailyChallange {
                 self.secondsElapsed += 1
-            } else if self.gameTypeStr == .TimeAttack {
+            } else if AppConstants.AppConfigurations.gameTypeStr == .TimeAttack {
                 self.secondsElapsed -= 1
                 if self.secondsElapsed <= 0 {
                     self.showLoseAlert()
@@ -844,6 +878,7 @@ extension SolitaireGameView {
             }
         }
         
+        if AppConstants.AppConfigurations.gameTypeStr == .RandomGame { self.checkGoalMidGame() }
         // If no more moves available, check win
         if checkWinCondition() {
             showWinAnimation()
@@ -853,22 +888,50 @@ extension SolitaireGameView {
     
     
     private func checkWinCondition() -> Bool {
+        if AppConstants.AppConfigurations.gameTypeStr == .RandomGame, !checkRandomGameGoal() { return false }
+        
         return Model.sharedInstance.foundationStacks.allSatisfy { $0.cards.count == 13 }
+    }
+    
+    func checkRandomGameGoal() -> Bool {
+        guard AppConstants.AppConfigurations.gameTypeStr == .RandomGame else { return true } // skip if not RandomGame
+
+        switch Game.sharedInstance.currentRandomTask {
+        case .completeAllAces:
+            return Game.sharedInstance.allSuitsInFoundation()
+        case .show7OfHearts:
+            return Game.sharedInstance.isSevenOfHeartsVisible()
+        case .fillEachFoundationOnce:
+            return Game.sharedInstance.allAcesInFoundation()
+        case .custom(_):
+            return false
+        default:
+            return false
+        }
+    }
+    
+    func checkGoalMidGame() {
+        if checkRandomGameGoal() {
+            taskLabel.text = "✅ Goal Completed! Finish the game to win."
+            taskLabel.textColor = .systemGreen
+            showWinAnimation()
+        }
     }
     
     private func showWinAnimation() {
         
-        //Store the game details
-        let record = ChallengeRecord(
-            dateKey: gameDate,
-            completed: true,
-            score: score,
-            moves: moveCount,
-            timeInSeconds: secondsElapsed
-        )
-        
-        ChallengeHistoryManager.shared.saveRecord(record)
-
+        if AppConstants.AppConfigurations.gameTypeStr == .DailyChallange {
+            //Store the game details
+            let record = ChallengeRecord(
+                dateKey: gameDate,
+                completed: true,
+                score: score,
+                moves: moveCount,
+                timeInSeconds: secondsElapsed
+            )
+            
+            ChallengeHistoryManager.shared.saveRecord(record)
+        }
         
         self.playToastSound(.gameWin)
         self.showWinAlert()

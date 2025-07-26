@@ -14,7 +14,7 @@ enum CardState {
 }
 
 struct CardItem {
-    let image: UIImage
+    let imageString: String
     let pointsRequired: Int
     var isPurchased: Bool
     var isSelected: Bool
@@ -30,8 +30,9 @@ struct CardItem {
 
 
 class CardSelectionViewController: UIViewController {
-    @IBOutlet weak var collectionView: UICollectionView!
     
+    @IBOutlet weak var collectionView: UICollectionView!
+
     var cardItems: [CardItem] = []
     
     override func viewDidLoad() {
@@ -43,17 +44,26 @@ class CardSelectionViewController: UIViewController {
     func setupCollectionView() {
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.register(UINib(nibName: "CardCell", bundle: nil), forCellWithReuseIdentifier: "CardCell")
+        collectionView.register(UINib(nibName: "CardSelectionCell", bundle: nil), forCellWithReuseIdentifier: "CardSelectionCell")
+        
+        if let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout {
+            layout.estimatedItemSize = .zero
+        }
         
     }
     
     
     func loadCards() {
         cardItems = [
-            CardItem(image: UIImage(named: "PlayingCard-back")!, pointsRequired: 50, isPurchased: true, isSelected: true),
-            CardItem(image: UIImage(named: "PlayingCard-back_1")!, pointsRequired: 75, isPurchased: true, isSelected: false),
-            CardItem(image: UIImage(named: "PlayingCard-back_2")!, pointsRequired: 100, isPurchased: false, isSelected: false),
-            CardItem(image: UIImage(named: "PlayingCard-back_3")!, pointsRequired: 100, isPurchased: false, isSelected: false),
+            CardItem(imageString: "AE_card", pointsRequired: 50, isPurchased: true, isSelected: true),
+            CardItem(imageString: "AU_card", pointsRequired: 50, isPurchased: true, isSelected: true),
+            CardItem(imageString: "CN_card", pointsRequired: 50, isPurchased: true, isSelected: true),
+            CardItem(imageString: "IN_card", pointsRequired: 50, isPurchased: true, isSelected: true),
+            CardItem(imageString: "GB_card", pointsRequired: 75, isPurchased: true, isSelected: false),
+            CardItem(imageString: "IL_card", pointsRequired: 75, isPurchased: true, isSelected: false),
+            CardItem(imageString: "US_card", pointsRequired: 100, isPurchased: false, isSelected: false),
+            CardItem(imageString: "PK_card", pointsRequired: 100, isPurchased: false, isSelected: false),
+            CardItem(imageString: "JP_card", pointsRequired: 100, isPurchased: false, isSelected: false),
             // Add more...
         ]
         collectionView.reloadData()
@@ -66,15 +76,17 @@ extension CardSelectionViewController: UICollectionViewDataSource, UICollectionV
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: CardCell.identifier, for: indexPath) as! CardCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CardSelectionCell", for: indexPath) as! CardSelectionCell
         cell.configure(with: cardItems[indexPath.item])
-        cell.backgroundColor = .yellow
         return cell
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let selectedCard = cardItems[indexPath.item]
 
+        AppConstants.AppConfigurations.cardBG = selectedCard.imageString
+        print("Current Selected Image : \(AppConstants.AppConfigurations.cardBG)")
+        
         switch selectedCard.state {
         case .purchasedSelected:
             break // Already selected
@@ -105,16 +117,14 @@ extension CardSelectionViewController: UICollectionViewDataSource, UICollectionV
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         let itemsPerRow: CGFloat = 3
         let spacing: CGFloat = 12
-        let sectionInsets = UIEdgeInsets(top: spacing, left: spacing, bottom: spacing, right: spacing)
-
-        let totalSpacing = sectionInsets.left + sectionInsets.right + (spacing * (itemsPerRow - 1))
+        let totalSpacing = spacing * (itemsPerRow + 1) // leading + between + trailing
         let availableWidth = collectionView.bounds.width - totalSpacing
         let itemWidth = floor(availableWidth / itemsPerRow)
-
+        
         // Maintain card aspect ratio (253 x 379)
         let itemHeight = itemWidth * (379.0 / 253.0)
-
-        return CGSize(width: itemWidth-10, height: itemHeight)
+        
+        return CGSize(width: itemWidth, height: itemHeight)
     }
     
     func collectionView(_ collectionView: UICollectionView,

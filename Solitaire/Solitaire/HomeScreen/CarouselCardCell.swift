@@ -14,6 +14,7 @@ class CarouselCardCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var playButton: UIButton!
+    @IBOutlet weak var lblPoints: UILabel!
     
 
     override func awakeFromNib() {
@@ -45,5 +46,13 @@ class CarouselCardCell: UICollectionViewCell {
         titleLabel.text = card.title
         playButton.appPrimaryButton(isEnable: true, title: card.buttonTitle ?? "Play", titleFont: AppConstants.Fonts.MarkerFeltWide_14!)
         imageView.image = UIImage(named: card.imageName)
+        if card.type == .dailyChallenge {
+            lblPoints.text = "15 Points"
+        }else if card.type == .random {
+            lblPoints.text = "10 Points"
+        }else if card.type == .timer {
+            lblPoints.text = "20 Points"
+        }
+        
     }
 }

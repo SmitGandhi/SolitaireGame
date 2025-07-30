@@ -105,4 +105,13 @@ extension UIView {
         self.layer.borderWidth = 0.0
         self.layer.borderColor = UIColor.darkGray.cgColor
     }
+    
+    func shake(duration: CFTimeInterval = 0.4, pathLength: CGFloat = 8) {
+        let animation = CAKeyframeAnimation(keyPath: "transform.translation.x")
+        animation.timingFunction = CAMediaTimingFunction(name: .linear)
+        animation.duration = duration
+        animation.values = [-pathLength, pathLength, -pathLength * 0.7, pathLength * 0.7, -pathLength * 0.4, pathLength * 0.4, 0]
+        self.layer.add(animation, forKey: "shake")
+    }
+    
 }

@@ -9,8 +9,6 @@ import UIKit
 
 let scaleFactor = UIScreen.main.bounds.height / 667.0
 
-
-
 extension String {
     
     var localized: String {
@@ -47,10 +45,20 @@ struct FileUtilities {
     }
 }
 
-// Example
-//private extension Selector {
-//    static let handlePan = #selector(GameController.handlePan(_:))
-//
-//}
+enum HapticManager {
+    static func vibrate(for type: UINotificationFeedbackGenerator.FeedbackType) {
+        let generator = UINotificationFeedbackGenerator()
+        generator.prepare()
+        generator.notificationOccurred(type)
+    }
 
+    static func lightImpact() {
+        let generator = UIImpactFeedbackGenerator(style: .light)
+        generator.prepare()
+        generator.impactOccurred()
+    }
 
+    static func errorVibration() {
+        vibrate(for: .success)
+    }
+}

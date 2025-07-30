@@ -10,14 +10,17 @@ import UIKit
 class SettingViewController: UIViewController {
     enum SettingsSection {
         case sound
+        case vibration
         case testing
         case legal
         case customization
+        case blankCell
     }
     
     enum SettingsItem {
         case toggle(title: String, isOn: Bool)
         case button(title: String, color: UIColor, id: String)
+        case blankItem
     }
     
     @IBOutlet weak var tblView: UITableView!
@@ -37,6 +40,7 @@ class SettingViewController: UIViewController {
     private func setupData() {
         settings = [
             (.sound, [.toggle(title: "Sound", isOn: true)]),
+            (.vibration, [.toggle(title: "Vibration", isOn: true)]),
             (.testing, [.toggle(title: "Testing", isOn: true)]),
             (.legal, [
                 .button(title: "Terms & Conditions", color: .black, id: "T&C"),
@@ -45,7 +49,9 @@ class SettingViewController: UIViewController {
             (.customization, [
                 .button(title: "Change Card", color: UIColor.systemOrange, id: "ChangeCard"),
                 .button(title: "Change Background", color: UIColor.systemOrange, id: "ChangeBackground")
-            ])
+            ]),
+            (.blankCell, [.blankItem,
+                          .blankItem])
         ]
     }
     
@@ -76,9 +82,11 @@ extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         switch settings[section].section {
         case .sound: return "Sound Settings"
+        case .vibration: return "Vibration Settings"
         case .testing: return "Testing"
         case .legal: return "Legal"
         case .customization: return "Customization"
+        case .blankCell: return nil
         }
     }
     
@@ -102,6 +110,15 @@ extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
                 ) { newValue in
                     AppConstants.AppConfigurations.isSoundEnable = newValue
                     print("Sound toggled: \(newValue)")
+                }
+            }else if settings[indexPath.section].section == SettingsSection.vibration {
+                cell.configure(
+                    with: title,
+                    isOn: AppConstants.AppConfigurations.isVibrationEnable,
+                    symbolName: "iphone.radiowaves.left.and.right"
+                ) { newValue in
+                    AppConstants.AppConfigurations.isVibrationEnable = newValue
+                    print("Vibration toggled: \(newValue)")
                 }
             }else{
                 cell.configure(
@@ -146,6 +163,10 @@ extension SettingViewController: UITableViewDataSource, UITableViewDelegate {
                 }
             }
             cell.button.layer.cornerRadius = 22
+            return cell
+        case .blankItem:
+            let cell = UITableViewCell()
+            cell.backgroundColor = .clear
             return cell
         }
     }

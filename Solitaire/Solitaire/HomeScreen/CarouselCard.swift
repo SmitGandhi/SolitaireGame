@@ -10,7 +10,8 @@ import Foundation
 
 enum CardType {
     case dailyChallenge
-    case event
+    case random
+    case timer
 }
 
 struct CarouselCard {

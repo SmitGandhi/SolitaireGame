@@ -40,7 +40,7 @@ final class SolitaireGameView: UIView {
     weak var delegate: SolitaireGameViewDelegate?
     
     private var isAutoPlaying = false
-
+    
     private var foundationStacks = [FoundationCardStackView]()
     private var tableauStackViews = [TableauStackView]()
     private var stockStackView = StockCardStackView(frame: CGRect.zero)
@@ -56,30 +56,30 @@ final class SolitaireGameView: UIView {
     private var timerLabel: UILabel!
     private var movesLabel: UILabel!
     private var scoreLabel: UILabel!
-
+    
     private var timer: Timer?
     var secondsElapsed = 0
     private var moveCount = 0
     private var score = 0
     var gameDate: String = ""
-
+    
     private var timerStarted = false
     private var taskLabel: UILabel!
-
+    
     //MARK: Init
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         self.backgroundColor = UIColor(hex: 0x004D2C)
         self.initStackViews()
-
+        
         self.setupTaskLabel()
-
+        
         if AppConstants.AppConfigurations.gameTypeStr == .RandomGame {
             Game.sharedInstance.generateRandomTask()
             taskLabel.text = Game.sharedInstance.currentRandomTask?.description ?? ""
             taskLabel.isHidden = false
-                        
+            
             if AppConstants.AppConfigurations.testModeEnabled {
                 self.setupTestMode()  // ✅ Only do this
             } else {
@@ -105,18 +105,18 @@ final class SolitaireGameView: UIView {
         taskLabel.numberOfLines = 0
         taskLabel.text = "" // Default empty
         self.addSubview(taskLabel)
-
+        
         NSLayoutConstraint.activate([
             taskLabel.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.topAnchor, constant: 8),
             taskLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 16),
             taskLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -16)
         ])
     }
- 
+    
     private func initStackViews() {
         let screenWidth = UIScreen.main.bounds.width
         let screenHeight = UIScreen.main.bounds.height
-
+        
         let isLargeScreen = screenWidth > 600
         let buttonFontSize: CGFloat = isLargeScreen ? 30.0 : 14.0
         let labelFontSize: CGFloat = isLargeScreen ? 22.0 : 14.0
@@ -124,7 +124,7 @@ final class SolitaireGameView: UIView {
         let buttonHeight: CGFloat = isLargeScreen ? 44 : 30
         let buttonY: CGFloat = isLargeScreen ? scaled(value: 40.0) : scaled(value: 60.0)
         let StackViewTopConstrain: CGFloat = isLargeScreen ? scaled(value: 80.0) : scaled(value: 120.0)
-
+        
         let baseRect = CGRect(x: 4.0, y: StackViewTopConstrain, width: CARD_WIDTH, height: CARD_HEIGHT)
         var foundationRect = baseRect
         for index in 0 ..< 4 {
@@ -133,16 +133,16 @@ final class SolitaireGameView: UIView {
             self.foundationStacks.append(stackView)
             foundationRect = foundationRect.offsetBy(dx: CGFloat(CARD_WIDTH + SPACING), dy: 0.0)
         }
-
+        
         foundationRect = foundationRect.offsetBy(dx: CGFloat(CARD_WIDTH + SPACING), dy: 0.0)
         self.talonStackView = TalonCardStackView(frame: foundationRect, cards: Model.sharedInstance.talonStack)
         self.addSubview(self.talonStackView)
-
+        
         foundationRect = foundationRect.offsetBy(dx: CGFloat(CARD_WIDTH + SPACING), dy: 0.0)
         self.stockStackView = StockCardStackView(frame: foundationRect, cards: Model.sharedInstance.stockStack)
         self.stockStackView.delegate = self
         self.addSubview(self.stockStackView)
-
+        
         var gameStackRect = baseRect.offsetBy(dx: 0.0, dy: CGFloat(CARD_HEIGHT + scaled(value: 12.0)))
         self.baseTableauFrameRect = gameStackRect
         for index in 0 ..< 7 {
@@ -151,7 +151,7 @@ final class SolitaireGameView: UIView {
             self.tableauStackViews.append(stackView)
             gameStackRect = gameStackRect.offsetBy(dx: CGFloat(CARD_WIDTH + SPACING), dy: 0.0)
         }
-
+        
         // Buttons
         let newDealButton = UIButton(frame: CGRect(x: 10.0, y: buttonY, width: buttonWidth, height: buttonHeight))
         newDealButton.setTitle("Back", for: .normal)
@@ -160,14 +160,14 @@ final class SolitaireGameView: UIView {
         newDealButton.titleLabel?.font = .systemFont(ofSize: buttonFontSize)
         newDealButton.addTarget(self, action: .newDealTap, for: .touchUpInside)
         self.addSubview(newDealButton)
-
+        
         let hintButton = UIButton(frame: CGRect(x: (screenWidth / 2 - buttonWidth / 2), y: buttonY, width: buttonWidth, height: buttonHeight))
         hintButton.setTitle("Hint", for: .normal)
         hintButton.setTitleColor(.white, for: .normal)
         hintButton.titleLabel?.font = .systemFont(ofSize: buttonFontSize)
         hintButton.addTarget(self, action: .hintTap, for: .touchUpInside)
         self.addSubview(hintButton)
-
+        
         let undoButton = UIButton(frame: CGRect(x: (screenWidth - buttonWidth - 10), y: buttonY, width: buttonWidth, height: buttonHeight))
         undoButton.setTitle("Undo", for: .normal)
         undoButton.setTitleColor(.white, for: .normal)
@@ -175,15 +175,15 @@ final class SolitaireGameView: UIView {
         undoButton.titleLabel?.font = .systemFont(ofSize: buttonFontSize)
         undoButton.addTarget(self, action: .undoTap, for: .touchUpInside)
         self.addSubview(undoButton)
-
+        
         
         // Labels
         let yOffset = buttonY + buttonHeight + 5
-
+        
         timerLabel = UILabel(frame: CGRect(x: 10, y: yOffset, width: 100, height: 24))
         movesLabel = UILabel(frame: CGRect(x: (screenWidth / 2 - 50), y: yOffset, width: 100, height: 24))
         scoreLabel = UILabel(frame: CGRect(x: screenWidth - 130, y: yOffset, width: 120, height: 24))
-
+        
         for label in [timerLabel, movesLabel, scoreLabel] {
             label?.font = .systemFont(ofSize: labelFontSize)
             label?.textColor = .white
@@ -258,7 +258,7 @@ final class SolitaireGameView: UIView {
             if move.type == .stockToTalon {
                 original.faceUp = false // ✅ Flip back face down
             }
-
+            
             move.from.addCard(card: original)
         }
         
@@ -319,7 +319,7 @@ final class SolitaireGameView: UIView {
                 for toTableau in tableauStackViews where toTableau != fromTableau {
                     if toTableau.cards.canAccept(droppedCard: card) {
                         // Highlight drop target
-//                        highlightStackTarget(toTableau)
+                        //                        highlightStackTarget(toTableau)
                         
                         // Highlight card sequence
                         let movableViews = faceUpCardViews[i...]
@@ -427,7 +427,7 @@ final class SolitaireGameView: UIView {
         
         //Solve Deck
         Model.sharedInstance.deck = Game.sharedInstance.generateSolvableDeck()
-
+        
         var tableauFrame = self.baseTableauFrameRect
         var cardValuesIndex = 0
         for outerIndex in 0 ..< 7 {
@@ -449,39 +449,39 @@ final class SolitaireGameView: UIView {
     
     private func setupTestMode() {
         print("✅ Test Mode Activated")
-
+        
         // Clear all stacks
         Model.sharedInstance.foundationStacks.forEach { $0.removeAllCards() }
         Model.sharedInstance.tableauStacks.forEach { $0.removeAllCards() }
         Model.sharedInstance.talonStack.removeAllCards()
         Model.sharedInstance.stockStack.removeAllCards()
-
+        
         let suitStartIndex = [
             0 * 13, // Spades
             1 * 13, // Diamonds
             2 * 13, // Hearts
             3 * 13  // Clubs
         ]
-
+        
         var remainingCards: [Card] = []
-
+        
         // Fill foundation A–8
         for (i, foundation) in Model.sharedInstance.foundationStacks.enumerated() {
             for j in 0...7 {
                 let value = suitStartIndex[i] + j
                 foundation.addCard(card: Card(value: value, faceUp: true))
             }
-
+            
             // Remaining cards: 9,10,J,Q,K (8–12)
             for j in 8...12 {
                 let value = suitStartIndex[i] + j
                 remainingCards.append(Card(value: value, faceUp: true))
             }
         }
-
+        
         // Shuffle remaining cards (optional)
         remainingCards.shuffle()
-
+        
         // Distribute remaining cards across tableau and talon
         for (i, card) in remainingCards.enumerated() {
             if i % 2 == 0 && i / 2 < Model.sharedInstance.tableauStacks.count {
@@ -490,7 +490,7 @@ final class SolitaireGameView: UIView {
                 Model.sharedInstance.talonStack.addCard(card: card)
             }
         }
-
+        
         // Refresh all views
         let allViews = [stockStackView, talonStackView] + foundationStacks + tableauStackViews
         allViews.forEach { $0.refresh() }
@@ -609,15 +609,15 @@ extension SolitaireGameView {
                     
                     let movedCards = Model.sharedInstance.dragStack.cards
                     
-//                    // ✅ Capture flippedCard BEFORE removing cards
-//                    let flippedCard: Card? = {
-//                        let remainingCount = stackDraggedFrom!.cards.cards.count - movedCards.count
-//                        if remainingCount > 0 {
-//                            let potentialFlip = stackDraggedFrom!.cards.cards[remainingCount - 1]
-//                            return potentialFlip.faceUp ? nil : potentialFlip
-//                        }
-//                        return nil
-//                    }()
+                    //                    // ✅ Capture flippedCard BEFORE removing cards
+                    //                    let flippedCard: Card? = {
+                    //                        let remainingCount = stackDraggedFrom!.cards.cards.count - movedCards.count
+                    //                        if remainingCount > 0 {
+                    //                            let potentialFlip = stackDraggedFrom!.cards.cards[remainingCount - 1]
+                    //                            return potentialFlip.faceUp ? nil : potentialFlip
+                    //                        }
+                    //                        return nil
+                    //                    }()
                     // ✅ Capture flippedCard BEFORE removing cards
                     let flippedCard: Card? = {
                         guard let stack = stackDraggedFrom else { return nil }
@@ -635,7 +635,7 @@ extension SolitaireGameView {
                     
                     
                     movedCards.forEach { view.cards.addCard(card: $0) }
-                        
+                    
                     Game.sharedInstance.pushMove(Game.Move(
                         type: .tableauToTableau,
                         from: stackDraggedFrom!.cards,
@@ -734,7 +734,7 @@ extension SolitaireGameView {
                 // card(s) could be dropped, so put them back
                 dragView.cards.cards.forEach{ card in stackDraggedFrom!.cards.addCard(card: card) }
                 stackDraggedFrom?.refresh()
-
+                
             }
             
             dragView.removeFromSuperview()
@@ -744,7 +744,7 @@ extension SolitaireGameView {
             doingDrag = false
         }
         playToastSound(.cardslide)
-
+        
         if !timerStarted {
             startTimer()
             timerStarted = true
@@ -755,7 +755,7 @@ extension SolitaireGameView {
         }
         
         if AppConstants.AppConfigurations.gameTypeStr == .RandomGame { self.checkGoalMidGame() }
-
+        
         if checkWinCondition() {
             showWinAnimation()
         }
@@ -867,7 +867,7 @@ extension SolitaireGameView {
                                 foundationView.refresh()
                                 
                                 self.registerMove(points: 10)
-
+                                
                                 // Recurse to next move
                                 self.startAutoPlayToFoundation()
                             })
@@ -895,7 +895,7 @@ extension SolitaireGameView {
     
     func checkRandomGameGoal() -> Bool {
         guard AppConstants.AppConfigurations.gameTypeStr == .RandomGame else { return true } // skip if not RandomGame
-
+        
         switch Game.sharedInstance.currentRandomTask {
         case .completeAllAces:
             return Game.sharedInstance.allSuitsInFoundation()
@@ -919,6 +919,7 @@ extension SolitaireGameView {
     }
     
     private func showWinAnimation() {
+        var userPoint: Int = UserDefaults.standard.object(forKey: AppConstants.userDefaultKeys.userPoints) as? Int ?? 0
         
         if AppConstants.AppConfigurations.gameTypeStr == .DailyChallange {
             //Store the game details
@@ -931,7 +932,14 @@ extension SolitaireGameView {
             )
             
             ChallengeHistoryManager.shared.saveRecord(record)
+            userPoint += 15
+        }else if AppConstants.AppConfigurations.gameTypeStr == .RandomGame {
+            userPoint += 10
+        }else if AppConstants.AppConfigurations.gameTypeStr == .TimeAttack {
+            userPoint += 20
         }
+        
+        UserDefaults.standard.set(userPoint, forKey: AppConstants.userDefaultKeys.userPoints)
         
         self.playToastSound(.gameWin)
         self.showWinAlert()
@@ -941,14 +949,50 @@ extension SolitaireGameView {
         timer = nil
         
         // 🌧️ Smooth continuous rainfall
-        let rainDuration: TimeInterval = 3.0
-        let rainInterval: TimeInterval = 0.05 // new drop every 50ms
-        let numberOfRaindrops = Int(rainDuration / rainInterval)
+        //        let rainDuration: TimeInterval = 3.0
+        //        let rainInterval: TimeInterval = 0.05 // new drop every 50ms
+        //        let numberOfRaindrops = Int(rainDuration / rainInterval)
+        //
+        //        for i in 0..<numberOfRaindrops {
+        //            DispatchQueue.main.asyncAfter(deadline: .now() + rainInterval * Double(i)) {
+        //                self.spawnRaindrop()
+        //            }
+        //        }
         
-        for i in 0..<numberOfRaindrops {
-            DispatchQueue.main.asyncAfter(deadline: .now() + rainInterval * Double(i)) {
-                self.spawnRaindrop()
+        // 🎉 Card Burst Animation
+        let burstDuration: TimeInterval = 2.5
+        let burstInterval: TimeInterval = 0.02
+        let numberOfCards = Int(burstDuration / burstInterval)
+        
+        for i in 0..<numberOfCards {
+            DispatchQueue.main.asyncAfter(deadline: .now() + burstInterval * Double(i)) {
+                self.spawnBurstCard()
             }
+        }
+    }
+    
+    private func spawnBurstCard() {
+        let randomIndex = Int.random(in: 0..<Model.sharedInstance.cards.count)
+        let cardView = Model.sharedInstance.cards[randomIndex]
+        
+        guard let snapshot = cardView.snapshotView(afterScreenUpdates: false) else { return }
+        
+        let startX = self.bounds.width / 2
+        let startY = self.bounds.height / 2
+        snapshot.frame = CGRect(x: startX, y: startY, width: CARD_WIDTH, height: CARD_HEIGHT)
+        self.addSubview(snapshot)
+        
+        let angle = CGFloat.random(in: -CGFloat.pi...CGFloat.pi)
+        let radius: CGFloat = CGFloat.random(in: 100...400)
+        let endX = startX + radius * cos(angle)
+        let endY = startY + radius * sin(angle)
+        
+        UIView.animate(withDuration: 2.0, delay: 0, options: [.curveEaseOut], animations: {
+            snapshot.frame.origin = CGPoint(x: endX, y: endY)
+            snapshot.alpha = 0.0
+            snapshot.transform = CGAffineTransform(rotationAngle: angle)
+        }) { _ in
+            snapshot.removeFromSuperview()
         }
     }
     
@@ -1034,6 +1078,8 @@ extension SolitaireGameView {
             timerStarted = true
         }
         
+        var moveMade = false
+        
         if let talonStack = inView as? TalonCardStackView {
             if let card = talonStack.cards.topCard() {
                 // Try to move to Foundation first
@@ -1041,7 +1087,7 @@ extension SolitaireGameView {
                     if foundation.cards.canAccept(droppedCard: card) {
                         foundation.cards.addCard(card: card)
                         talonStack.cards.popCards(numberToPop: 1, makeNewTopCardFaceup: true)
-
+                        
                         Game.sharedInstance.pushMove(Game.Move(
                             type: .talonToFoundation,
                             from: Model.sharedInstance.talonStack,
@@ -1049,14 +1095,15 @@ extension SolitaireGameView {
                             cards: [card],
                             flippedCard: nil
                         ))
-
+                        
                         registerMove(points: 10)
                         foundation.refresh()
                         talonStack.refresh()
+                        moveMade = true
                         return
                     }
                 }
-
+                
                 
                 // If not possible, try to move to any Tableau
                 for tableau in tableauStackViews {
@@ -1073,11 +1120,11 @@ extension SolitaireGameView {
                         ))
                         
                         registerMove(points: 5)
-
+                        
                         // Refresh both
                         tableau.refresh()
                         talonStack.refresh()
-                        
+                        moveMade = true
                         return
                     }
                 }
@@ -1106,16 +1153,24 @@ extension SolitaireGameView {
                         flippedCard: flippedCard
                     ))
                     self.registerMove(points: 10)
+                    moveMade = true
                     return
                 }
             }
-            
             // Try Tableau → Tableau move
-            handleTableauToTableauDoubleTap(from: tableauStack)
+            moveMade = handleTableauToTableauDoubleTap(from: tableauStack)
+            
+        }
+        // ❌ Invalid move fallback
+        if !moveMade && AppConstants.AppConfigurations.isVibrationEnable{
+            HapticManager.errorVibration()
+            if let cardView = (inView as? CardStackView)?.subviews.compactMap({ $0 as? CardView }).last {
+                cardView.shake()
+            }
         }
     }
     
-    private func handleTableauToTableauDoubleTap(from fromStack: TableauStackView) {
+    private func handleTableauToTableauDoubleTap(from fromStack: TableauStackView) -> Bool {
         let allCardViews = fromStack.subviews.compactMap { $0 as? CardView }
         let faceUpCardViews = allCardViews.filter { $0.isFaceUp }
         
@@ -1127,13 +1182,13 @@ extension SolitaireGameView {
                     
                     // ✅ Get all movable face-up cards from this point onward
                     let movableCards = Array(fromStack.cards.cards.suffix(from: fromStack.cards.cards.count - faceUpCardViews.count + i))
-
+                    
                     // Perform the move
                     movableCards.forEach { toStack.cards.addCard(card: $0) }
                     
                     // Remove from source
                     fromStack.cards.cards.removeLast(movableCards.count)
-                   
+                    
                     // ✅ Check for flipped card
                     let flippedCard: Card? = {
                         if let top = fromStack.cards.topCard(), !top.faceUp {
@@ -1143,12 +1198,12 @@ extension SolitaireGameView {
                     }()
                     
                     Game.sharedInstance.pushMove(Game.Move(
-                                    type: .tableauToTableau,
-                                    from: fromStack.cards,
-                                    to: toStack.cards,
-                                    cards: movableCards,
-                                    flippedCard: flippedCard
-                                ))
+                        type: .tableauToTableau,
+                        from: fromStack.cards,
+                        to: toStack.cards,
+                        cards: movableCards,
+                        flippedCard: flippedCard
+                    ))
                     
                     registerMove(points: 5)
                     
@@ -1159,10 +1214,11 @@ extension SolitaireGameView {
                     fromStack.refresh()
                     toStack.refresh()
                     
-                    return
+                    return true
                 }
             }
         }
+        return false
     }
     
     

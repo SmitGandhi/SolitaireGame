@@ -41,6 +41,18 @@ class CardSelectionViewController: UIViewController {
         loadCards()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        if let mainTab = UIApplication.shared.windows.first?.rootViewController as? MainTabBarController {
+            mainTab.hideCustomTabBar()
+        }
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        if let tabBarController = UIApplication.shared.windows.first?.rootViewController as? MainTabBarController {
+            tabBarController.showCustomTabBar()
+        }
+    }
     func setupCollectionView() {
         collectionView.delegate = self
         collectionView.dataSource = self

@@ -19,10 +19,17 @@ public struct AppConstants {
         static var removeCellCounts: difficultyLevel = .easy
         static var isDarkModeEnabled: Bool = false
         static var isSoundEnable: Bool = false
+        static var isVibrationEnable: Bool = false
         static var testModeEnabled: Bool = false
         static var timerGameCount: Int = 300
         static var gameTypeStr:gameType = .DailyChallange
         static var cardBG:String = "IN_card"
+        static var userPoints: Int = 0
+    }
+    
+    struct userDefaultKeys{
+        static let userPoints = "UserPoints"
+
     }
     
     // MARK: - App Environemnts

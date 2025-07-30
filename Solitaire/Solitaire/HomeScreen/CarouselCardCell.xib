@@ -46,6 +46,12 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="10 Points" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Ob-qV-GZq">
+                                <rect key="frame" x="267" y="241" width="66" height="18.5"/>
+                                <fontDescription key="fontDescription" name="MarkerFelt-Thin" family="Marker Felt" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
@@ -54,6 +60,8 @@
                             <constraint firstItem="ddL-Q5-ZYN" firstAttribute="top" secondItem="o3t-66-Wwk" secondAttribute="bottom" constant="8" id="NE0-24-JHW"/>
                             <constraint firstItem="ddL-Q5-ZYN" firstAttribute="leading" secondItem="CIS-eM-gqv" secondAttribute="leading" id="V7H-ND-JdP"/>
                             <constraint firstItem="o3t-66-Wwk" firstAttribute="trailing" secondItem="CIS-eM-gqv" secondAttribute="trailing" id="VKs-9N-BTt"/>
+                            <constraint firstItem="8Ob-qV-GZq" firstAttribute="trailing" secondItem="CIS-eM-gqv" secondAttribute="trailing" id="Vrg-2G-vYn"/>
+                            <constraint firstItem="8Ob-qV-GZq" firstAttribute="centerY" secondItem="ddL-Q5-ZYN" secondAttribute="centerY" id="Z6m-as-fAE"/>
                             <constraint firstItem="o3t-66-Wwk" firstAttribute="leading" secondItem="CIS-eM-gqv" secondAttribute="leading" id="aNe-QA-qdq"/>
                             <constraint firstItem="o3t-66-Wwk" firstAttribute="top" secondItem="CIS-eM-gqv" secondAttribute="bottom" constant="12" id="d5f-K6-Wbf"/>
                             <constraint firstItem="CIS-eM-gqv" firstAttribute="leading" secondItem="6Aq-jt-wSw" secondAttribute="leading" constant="16" id="svD-ja-ich"/>
@@ -73,6 +81,7 @@
             <connections>
                 <outlet property="cointerView" destination="6Aq-jt-wSw" id="Z0b-Fv-CnA"/>
                 <outlet property="imageView" destination="CIS-eM-gqv" id="Ep2-0t-tlg"/>
+                <outlet property="lblPoints" destination="8Ob-qV-GZq" id="eSO-nM-6vB"/>
                 <outlet property="playButton" destination="ddL-Q5-ZYN" id="mpO-DG-9gM"/>
                 <outlet property="titleLabel" destination="o3t-66-Wwk" id="dpu-F8-AQ7"/>
             </connections>

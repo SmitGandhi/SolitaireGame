@@ -16,8 +16,8 @@ class HomeViewController: UIViewController {
 
     private let originalCards: [CarouselCard] = [
         CarouselCard(type: .dailyChallenge, title: "Daily Challenge", subtitle: "Jul 8", buttonTitle: "Play", timer: "", imageName: "event0"),
-        CarouselCard(type: .event, title: "Beat the timer", subtitle: "About to start", buttonTitle: "Play", timer: "1d 22h", imageName: "event1"),
-        CarouselCard(type: .event, title: "Random Challenge", subtitle: "Event live!", buttonTitle: "Play", timer: "Now", imageName: "event2")
+        CarouselCard(type: .timer, title: "Beat the timer", subtitle: "About to start", buttonTitle: "Play", timer: "1d 22h", imageName: "event1"),
+        CarouselCard(type: .random, title: "Random Challenge", subtitle: "Event live!", buttonTitle: "Play", timer: "Now", imageName: "event2")
     ]
     private var cards: [CarouselCard] = []
     private var autoScrollTimer: Timer?
@@ -25,10 +25,15 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemGroupedBackground
-        btnPoints.appPrimaryButton(isEnable: true, title: "Points: 1200", titleFont: AppConstants.Fonts.MarkerFeltWide_16!)
         setupCollectionView()
         setupInfiniteCarousel()
         startAutoScrollTimer()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let userPoint = UserDefaults.standard.object(forKey: AppConstants.userDefaultKeys.userPoints) as? Int ?? 0
+        btnPoints.appPrimaryButton(isEnable: true, title: "Points: \(userPoint)", titleFont: AppConstants.Fonts.MarkerFeltWide_16!)
     }
 
     private func setupCollectionView() {
